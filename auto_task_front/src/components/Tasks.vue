@@ -14,7 +14,10 @@
       <ul>
         <li v-for="task in tasks">
           {{ task.name }} - {{ task.description }}
-          <button v-on:click="deleteTask(task)">X</button>
+          <div>
+          <button v-on:click="editTask(task)">EDIT</button>
+          <button v-on:click="deleteTask(task)">DELETE</button>
+          </div>
         </li>
       </ul>
     </section>
@@ -33,11 +36,16 @@ export default {
     addTask(e) {
       e.preventDefault();
       console.log("Agregar Task");
-      this.tasks.push(this.newTask);
+      let task = this.newTask;
+      this.tasks.push(task);
+      this.$http.post("http://localhost:3000/tasks/", {name: task.name, description: task.description, user_id: 1})
+      .then(res => console.log("Task created"));
       this.newTask = {};
     },
     deleteTask(task) {
       this.tasks.splice(this.tasks.indexOf(task), 1);
+      this.$http.delete("http://localhost:3000/tasks/"+task.id)
+      .then(res => alert("Task "+ task.name + " deleted"));
     }
   },
   created() {
@@ -87,7 +95,7 @@ button:hover {
 }
 
 .task-list {
-  background-color: rgba(29, 24, 24, 0.72);
+  background-color: rgba(24, 25, 29, 0.72);
   color: aliceblue;
   width: 70%;
   min-height: 25%;
@@ -96,5 +104,41 @@ button:hover {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.task-list ul {
+  counter-reset: index;  
+  padding: 0;
+ 
+}
+
+.task-list ul li {
+  counter-increment: index; 
+  display: flex;  
+  justify-content: space-around;
+  padding: 12px 0;
+  box-sizing: border-box;
+}
+
+/* Element counter */
+.task-list ul li::before {
+  content: counters(index, ".", decimal-leading-zero);
+  font-size: 1.5rem;
+  text-align: right;
+  font-weight: bold;
+  min-width: 50px;
+  padding-right: 12px;
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* Element separation */
+.task-list ul li + .task-list ul li {
+  border-top: 1px solid rgba(255,255,255,0.2);
 }
 </style>
