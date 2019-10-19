@@ -16,6 +16,7 @@
           {{ task.name }} - {{ task.description }}
           <div>
           <button v-on:click="editTask(task)">EDIT</button>
+          <button><router-link v-bind:to="'/tasks/' + task.id">EDIT 2</router-link></button>
           <button v-on:click="deleteTask(task)">DELETE</button>
           </div>
         </li>
@@ -46,6 +47,10 @@ export default {
       this.tasks.splice(this.tasks.indexOf(task), 1);
       this.$http.delete("http://localhost:3000/tasks/"+task.id)
       .then(res => alert("Task "+ task.name + " deleted"));
+    }, 
+    editTask(task) {
+      console.log(task.id);
+      this.$router.push({ path: "/steps", params: {id: task.id } });
     }
   },
   created() {
