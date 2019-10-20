@@ -5,9 +5,6 @@ require 'webdrivers'
 #
 def setup_browser(url)
   browser = Watir::Browser.new :firefox, headless: true
-#  browser.goto 'https://www.facebook.com/'
-#  browser.goto 'file:///home/vagrant/tA/holberton/pto.html'
-#  browser.goto 'http://www.ideam.gov.co/#'
   browser.goto url
   return browser
 end
@@ -33,7 +30,6 @@ def find_element_table(browser, element_name, execution=false)
       return "ok"
     else
       puts not_found
-      browser.close
       return nil
     end
 end
@@ -73,7 +69,6 @@ def find_element_button(browser, element_name, execution=false)
     else
       #print not found if the element was not found
       puts not_found
-      browser.close
       return nil
     end
   #click if the element found--function
@@ -89,7 +84,7 @@ end
 #          for an input and returned in an array
 # second = execuion true: find an element by his id and send
 #          the values, return ok if no errors, nil otherwise
-def find_element_input(browser, element_id=nil, text=nil, execution=false)
+def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
   ids = []
   if execution == false
     browser.inputs().each do |input|
@@ -135,12 +130,67 @@ def find_element_text(browser, element_id, execution=false)
 end
 
 ##
-# call the function required, not finished yet
+# call the function required
+# browser: the browser watir object that manage the web operaitons
 #
-def init_function(url, p1, p2=false, p3=false)
-  browser = setup_browser(url)
-  find_element_text(browser, p1)
+def init_function(browser, type, name_or_id=nil, text=nil, execution=false)
+  puts type
+  if type == 'table'
+    p 'gototable'
+    return find_element_table(browser, name_or_id, execution)
+  elsif type == 'button'
+    p 'gotobutton'
+    return find_element_button(browser, name_or_id, execution)
+  elsif type == 'text_input'
+    p 'gotoinput'
+    return find_element_text_input(browser, name_or_id, text, execution)
+  elsif type == 'text'
+    p 'gototext'
+    return find_element_text(browser, name_or_id, execution)
+  end
+  puts type
 end
 
-puts init_function(ARGV[0], ARGV[1])
+##
+# Recieve a list wit all the arguments send by javascript.
+# The first element are the url to make the work, the folowing elements are
+# a dictionaries with the parameters to execute the function required"
+# example:
+#    [url, execution, {type: 'button', name_or_id:'PTOs - Foundations'},
+#     {type: 'table', name_or_id: 'Student'}]
+# if any of the functions fail, print an error, close the browser and retur nil
+# if no errors, return ok
+def constructor_function(elements)
+
+  url = elements.shift
+  execution = elements.shift
+  browser = setup_browser(url)
+  elements.each do |element|
+    type = element[:type]
+    name_or_id = nil
+    text = nil
+    if element.has_key?(:name_or_id)
+      name_or_id = element[:name_or_id]
+    end
+    if element.has_key?(:text)
+      text = element[:text]
+    end
+    result = init_function(browser, type, name_or_id, text, execution)
+    if result == nil
+      puts "Error"
+      browser.close
+      return nil
+    end
+  end
+  return 'ok'
+end
+
+#  browser.goto 'https://www.facebook.com/'
+#  browser.goto 'file:///home/vagrant/tA/holberton/pto.html'
+#  browser.goto 'http://www.ideam.gov.co/#'
+url = 'file:///home/vagrant/tA/holberton/pto.html'
+execution = false
+response = [url, execution, {type: 'button', name_or_id:'PTOs - Foundations'},
+            {type: 'table', name_or_id: 'Student'}]
+puts constructor_function(response)
 #find_element_table(ARGV[1], ARGV[0])
