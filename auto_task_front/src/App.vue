@@ -7,6 +7,7 @@
 <script>
 import Login from './components/Login'
 import Tasks from './components/Tasks'
+import EditTask from './components/EditTask'
 
 export default {
   name: 'App',

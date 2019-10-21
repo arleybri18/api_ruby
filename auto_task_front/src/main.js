@@ -3,15 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 
+import 'bootstrap';
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
+import BootstrapVue from 'bootstrap-vue'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(BootstrapVue)
 
 import Login from './components/Login.vue';
 import Tasks from './components/Tasks.vue';
+import EditTask from './components/EditTask.vue';
 
 Vue.config.productionTip = false
 
@@ -26,6 +33,11 @@ const router = new VueRouter({
     {
       path: '/tasks',
       component: Tasks,
+    },
+    {
+      path: '/tasks/:id',
+      component: EditTask,
+      props: true
     }
   ]
 })
