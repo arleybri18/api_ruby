@@ -15,8 +15,7 @@
         <li v-for="task in tasks">
           {{ task.name }} - {{ task.description }}
           <div>
-          <button v-on:click="editTask(task)">EDIT</button>
-          <button><router-link v-bind:to="'/tasks/' + task.id">EDIT 2</router-link></button>
+          <button><router-link v-bind:to="'/tasks/' + task.id">EDIT</router-link></button>
           <button v-on:click="deleteTask(task)">DELETE</button>
           </div>
         </li>
@@ -47,10 +46,6 @@ export default {
       this.tasks.splice(this.tasks.indexOf(task), 1);
       this.$http.delete("http://localhost:3000/tasks/"+task.id)
       .then(res => alert("Task "+ task.name + " deleted"));
-    }, 
-    editTask(task) {
-      console.log(task.id);
-      this.$router.push({ path: "/steps", params: {id: task.id } });
     }
   },
   created() {
@@ -84,7 +79,7 @@ input {
   background-color: #e0dada;
   border: none;
 }
-button {
+button,a {
   height: 40px;
   padding: 5px 5px;
   margin: 10px 0px;
@@ -95,8 +90,15 @@ button {
   cursor: pointer;
   font-size: 16px;
 }
+
 button:hover {
   background-color: #711f1b;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #711f1b;
+  color: #e0dada;
 }
 
 .task-list {

@@ -46,6 +46,6 @@ class PagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def page_params
-      params.require(:page).permit(:url, :step_id)
+      params.require(:page).permit(:url)
     end
 end
