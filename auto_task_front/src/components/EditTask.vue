@@ -12,7 +12,7 @@
       <h1>Steps list</h1>
 
       <h4>
-        URL:
+        Current URL:
         <span>{{ page.id }}</span>
         <span>{{ page.url }}</span>
       </h4>
@@ -22,8 +22,8 @@
           <label for="elementTypeSelect" class="col-sm-2 col-form-label">Element Type</label>
           <div class="col-sm-2">
             <select class="form-control" v-model="newStep.elem_type" id="elementTypeSelect">
-              <option id="unknow">Unknow</option>
-              <option id="title">Title</option>
+              <option id="unknow">Text_input</option>
+              <option id="title">Text</option>
               <option id="button">Button</option>
               <option id="table">Table</option>
             </select>
@@ -37,7 +37,9 @@
           </label>
           <div class="col-sm-2">
             <select class="form-control" v-model="newStep.elem_action" id="elementActionSelect">
-              <option>Unknow</option>
+              <option>Click</option>
+              <option>Copy</option>
+              <option>Write</option>
             </select>
           </div>
         </div>
@@ -45,13 +47,9 @@
       </form>
       <ul>
         <li v-for="s in task.steps">
-          <b>URL:</b>{{ page.url }}
           <b>Elemen type:</b> {{ s.elem_type }}  <b>Name:</b> {{ s.name_elem }}  <b>Action:</b> {{ s.elem_action }}
-          <div>
-            <button>
-              <router-link v-bind:to="'/steps/' + s.id">EDIT</router-link>
-            </button>
-            <button v-on:click="deleteTask(task)">DELETE</button>
+          <div> 
+            <button v-on:click="deleteStep(s)">DELETE</button>
           </div>
         </li>
       </ul>
@@ -82,11 +80,23 @@ export default {
     addStep(e) {
       e.preventDefault();
       console.log("Agregar Step");
-      let step = this.newStep;
-      this.steps.push(step);
-      this.$http.post("http://localhost:3000/steps/", {elem_type: step.elem_type, name_elem: step.name_elem, elem_action: step.elem_action, task_id: this.task.id, user_id: 1, page_id: this.page.id})
+      this.$http.post("http://localhost:3000/steps/", {elem_type: this.newStep.elem_type, 
+      name_elem: this.newStep.name_elem, elem_action: this.newStep.elem_action,
+      task_id: this.id, user_id: 1, page_id: this.page.id})
       .then(res => console.log("Step created"));
+      this.task.steps.push(this.newStep);
       this.newStep = {};
+    },
+    deleteStep(step) {
+      this.task.steps.splice(this.task.steps.indexOf(step), 1);
+      this.$http.delete("http://localhost:3000/steps/"+step.id)
+      .then(res => alert("Step "+ step.id + " deleted"));
+    },
+    getPage(){
+      console.log(this.steps);
+    // this.$http
+    //   .get("http://localhost:3000/pages/" + this.task.steps[-1].page_id)
+    //   .then(res => (this.page = res.body));
     }
   },
   created() {
@@ -94,11 +104,9 @@ export default {
     this.$http
       .get("http://localhost:3000/tasks/" + this.id)
       .then(res => (this.task = res.body));
-      // incluir aqui llamado a pages, validar si es necesario crear una ruta que traiga esta info
-      console.log(this.task.steps);
-    this.$http
-      .get("http://localhost:3000/pages/" + step[0].page_id)
-      .then(res => (this.page = res.body));
+
+      this.getPage();
+
   }
 };
 </script>
