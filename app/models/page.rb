@@ -1,3 +1,3 @@
 class Page < ApplicationRecord
-  belongs_to :step
+    has_many :step
 end

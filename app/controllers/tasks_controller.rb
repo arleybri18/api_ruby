@@ -35,13 +35,17 @@ class TasksController < ApplicationController
 
   # DELETE /tasks/1
   def destroy
-    @task.destroy
+    @task_data.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task_data = Task.find(params[:id])
+      @step = @task_data.step
+      @task = {id: @task_data.id, name: @task_data.name, 
+              description: @task_data.description, steps: @step,
+              created_at: @task_data.created_at, updated_at: @task_data.updated_at}
     end
 
     # Only allow a trusted parameter "white list" through.
