@@ -15,13 +15,26 @@ class StepsController < ApplicationController
 
   # POST /steps
   def create
+    puts "Params"
+    puts params
+    puts "url:"
+    puts params[:url]
+    parameters = []
+    parameters.push(params[:url])
+    parameters.push(execution: false)
+    parameters.push(step_params)
+    puts "list to function"
+    puts parameters
+    
+=begin  
     @step = Step.new(step_params)
-
+    
     if @step.save
       render json: @step, status: :created, location: @step
     else
       render json: @step.errors, status: :unprocessable_entity
     end
+=end
   end
 
   # PATCH/PUT /steps/1

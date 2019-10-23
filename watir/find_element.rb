@@ -196,8 +196,12 @@ end
 #  browser.goto 'file:///home/vagrant/tA/holberton/pto.html'
 #  browser.goto 'http://www.ideam.gov.co/#'
 #url = 'file:///home/vagrant/tA/holberton/pto.html'
+
+=begin
 url =  "www.google.com"
 execution = false
 response = [url, execution, {type: 'text_input', name_or_id: 'q', text: 'mafe'}, {type: 'button', name_or_id: "Buscar con Google"} ]
 puts constructor_function(response)
+=end
+
 #find_element_table(ARGV[1], ARGV[0])

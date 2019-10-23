@@ -3,7 +3,7 @@
     <section class="add-url">
       <h1>TASK: {{ task.name }}</h1>
       <form v-on:submit="addPage">
-        <input type="text" v-model="newPage.url" placeholder="URL" />
+        <input id='url' type="text" v-model="newPage.url" placeholder="URL" />
         <button type="submit">ADD URL</button>
       </form>
     </section>
@@ -14,7 +14,7 @@
       <h4>
         Current URL:
         <span>{{ page.id }}</span>
-        <span>{{ page.url }}</span>
+        <span >{{ page.url }}</span>
       </h4>
 
       <form v-on:submit="addStep">
@@ -22,7 +22,7 @@
           <label for="elementTypeSelect" class="col-sm-2 col-form-label">Element Type</label>
           <div class="col-sm-2">
             <select class="form-control" v-model="newStep.elem_type" id="elementTypeSelect">
-              <option id="unknow">Text_input</option>
+              <option id="text_input">Text_input</option>
               <option id="title">Text</option>
               <option id="button">Button</option>
               <option id="table">Table</option>
@@ -80,7 +80,7 @@ export default {
     addStep(e) {
       e.preventDefault();
       console.log("Agregar Step");
-      this.$http.post("http://localhost:3000/steps/", {elem_type: this.newStep.elem_type, 
+      this.$http.post("http://localhost:3000/steps/", {url: document.getElementById("url").value, elem_type: this.newStep.elem_type, 
       name_elem: this.newStep.name_elem, elem_action: this.newStep.elem_action,
       task_id: this.id, user_id: 1, page_id: this.page.id})
       .then(res => console.log("Step created"));
