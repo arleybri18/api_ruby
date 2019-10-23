@@ -4,7 +4,7 @@ require 'webdrivers'
 # Function that setup the watir browser
 #
 def setup_browser(url)
-  browser = Watir::Browser.new :firefox, headless: true
+  browser = Watir::Browser.new :firefox, headless: false
   browser.goto url
   return browser
 end
@@ -54,6 +54,9 @@ def find_element_button(browser, element_name, execution=false)
     if browser.button(visible_text: element_name).present?
       button = browser.button(visible_text: element_name)
       puts button.text
+    elsif browser.input(type: "submit", value: element_name)
+      button = browser.input(type: "submit", value: element_name)
+      puts button.value
     elsif browser.li(visible_text: element_name).present?
       button = browser.li(visible_text: element_name)
       puts button.text
@@ -87,14 +90,16 @@ end
 def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
   ids = []
   if execution == false
-    browser.inputs().each do |input|
-      unless input.id == ""
-        ids.push(input.id)
+    browser.text_fields().each do |input|
+      unless input.attribute_value(:name) == ""
+        p 'aqui'
+      #puts input.attribute_value(:name)
+        ids.push(input.attribute_value(:name))
       end
     end
     return ids
   else
-    input = browser.text_field(id: element_id)
+    input = browser.text_field(name: element_id)
     if input.exists?
       input.set(text)
       return "ok"
@@ -165,6 +170,7 @@ def constructor_function(elements)
   url = elements.shift
   execution = elements.shift
   browser = setup_browser(url)
+  result = nil
   elements.each do |element|
     type = element[:type]
     name_or_id = nil
@@ -182,15 +188,16 @@ def constructor_function(elements)
       return nil
     end
   end
-  return 'ok'
+  sleep(2)
+  return result
 end
 
 #  browser.goto 'https://www.facebook.com/'
 #  browser.goto 'file:///home/vagrant/tA/holberton/pto.html'
 #  browser.goto 'http://www.ideam.gov.co/#'
-url = 'file:///home/vagrant/tA/holberton/pto.html'
+#url = 'file:///home/vagrant/tA/holberton/pto.html'
+url =  "www.google.com"
 execution = false
-response = [url, execution, {type: 'button', name_or_id:'PTOs - Foundations'},
-            {type: 'table', name_or_id: 'Student'}]
+response = [url, execution, {type: 'text_input', name_or_id: 'q', text: 'mafe'}, {type: 'button', name_or_id: "Buscar con Google"} ]
 puts constructor_function(response)
 #find_element_table(ARGV[1], ARGV[0])
