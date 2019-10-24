@@ -42,3 +42,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # gem to manage the JWT management process. 
 gem 'knock'
+
+#gems to initialize watir!
+gem 'watir', '~> 6.16.5'
+gem 'webdrivers', '~> 4.1.3'
