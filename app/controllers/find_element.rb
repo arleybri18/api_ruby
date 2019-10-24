@@ -1,5 +1,7 @@
-require 'watir'
-require 'webdrivers'
+# -*- coding: utf-8 -*-
+#module Find
+#require 'watir'
+#require 'webdrivers'
 ##
 # Function that setup the watir browser
 #
@@ -54,7 +56,8 @@ def find_element_button(browser, element_name, execution=false)
     if browser.button(visible_text: element_name).present?
       button = browser.button(visible_text: element_name)
       puts button.text
-    elsif browser.input(type: "submit", value: element_name)
+    elsif browser.input(type: "submit", value: element_name).present?
+      puts "aquí!"
       button = browser.input(type: "submit", value: element_name)
       puts button.value
     elsif browser.li(visible_text: element_name).present?
@@ -88,9 +91,12 @@ end
 # second = execuion true: find an element by his id and send
 #          the values, return ok if no errors, nil otherwise
 def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
+  puts execution
   ids = []
   if execution == false
-    browser.text_fields().each do |input|
+    puts 'if'
+    browser.text_fields.each do |input|
+      puts input.name
       unless input.attribute_value(:name) == ""
         p 'aqui'
       #puts input.attribute_value(:name)
@@ -99,12 +105,13 @@ def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
     end
     return ids
   else
+    puts 'no if'
     input = browser.text_field(name: element_id)
     if input.exists?
       input.set(text)
       return "ok"
     else
-      put "no existe"
+      puts "no existe"
       return nil
     end
   end
@@ -114,7 +121,10 @@ end
 # find an element by is id to copy his content
 # only copy the content when the execution is true
 def find_element_text(browser, element_id, execution=false)
+  puts 'execution:'
+  puts execution
   if execution == false
+    puts element_id
     text = browser.element(id: element_id)
     if text.exists?
       puts text.text
@@ -138,18 +148,21 @@ end
 # call the function required
 # browser: the browser watir object that manage the web operaitons
 #
-def init_function(browser, type, name_or_id=nil, text=nil, execution=false)
+def init_function(browser, type, name_or_id="", text=nil, execution=false)
   puts type
-  if type == 'table'
+  if type == 'Table'
     p 'gototable'
     return find_element_table(browser, name_or_id, execution)
-  elsif type == 'button'
+  elsif type == 'Button'
     p 'gotobutton'
     return find_element_button(browser, name_or_id, execution)
-  elsif type == 'text_input'
+  elsif type == 'Text_input'
     p 'gotoinput'
+    puts name_or_id
+    puts text
+    puts execution
     return find_element_text_input(browser, name_or_id, text, execution)
-  elsif type == 'text'
+  elsif type == 'Text'
     p 'gototext'
     return find_element_text(browser, name_or_id, execution)
   end
@@ -172,11 +185,11 @@ def constructor_function(elements)
   browser = setup_browser(url)
   result = nil
   elements.each do |element|
-    type = element[:type]
+    type = element[:elem_type]
     name_or_id = nil
     text = nil
-    if element.has_key?(:name_or_id)
-      name_or_id = element[:name_or_id]
+    if element.has_key?(:name_elem)
+      name_or_id = element[:name_elem]
     end
     if element.has_key?(:text)
       text = element[:text]
@@ -192,16 +205,17 @@ def constructor_function(elements)
   return result
 end
 
+#end
 #  browser.goto 'https://www.facebook.com/'
 #  browser.goto 'file:///home/vagrant/tA/holberton/pto.html'
 #  browser.goto 'http://www.ideam.gov.co/#'
 #url = 'file:///home/vagrant/tA/holberton/pto.html'
 
-
+=begin
 url =  "www.google.com"
 execution = false
 response = [url, execution, {type: 'text_input', name_or_id: 'q', text: 'mafe'}, {type: 'button', name_or_id: "Buscar con Google"} ]
 puts constructor_function(response)
-
+=end
 
 #find_element_table(ARGV[1], ARGV[0])
