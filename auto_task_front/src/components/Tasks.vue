@@ -35,10 +35,11 @@ export default {
   methods: {
     addTask(e) {
       e.preventDefault();
+      const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
       console.log("Agregar Task");
       let task = this.newTask;
       this.tasks.push(task);
-      this.$http.post("http://localhost:3000/tasks/", {name: task.name, description: task.description, user_id: 1})
+      this.$http.post("http://localhost:3000/tasks/", {name: task.name, description: task.description}, {headers: jwtHeader})
       .then(res => console.log("Task created"));
       this.newTask = {};
     },
@@ -49,8 +50,10 @@ export default {
     }
   },
   created() {
+    const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
+    console.log(localStorage.getItem('idToken'));
     this.$http
-      .get("http://localhost:3000/tasks")
+      .get("http://localhost:3000/tasks", {headers: jwtHeader})
       .then(res => (this.tasks = res.body));
   }
 };

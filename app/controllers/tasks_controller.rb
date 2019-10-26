@@ -1,11 +1,15 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /tasks
   def index
-    @tasks = Task.all
-
-    render json: @tasks
+    @tasks = Task.find_by(user_id: current_user.id)
+    if @tasks
+      render json: @tasks
+    else
+      render json: []
+    end
   end
 
   # GET /tasks/1
@@ -50,6 +54,7 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-      params.require(:task).permit(:name, :description, :enabled, :user_id)
+
+      params.require(:task).permit(:name, :description, :enabled)
     end
 end

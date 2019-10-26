@@ -100,7 +100,6 @@ export default {
     }
   },
   created() {
-    console.log("llegue " + this.id);
     this.$http
       .get("http://localhost:3000/tasks/" + this.id)
       .then(res => (this.task = res.body));
