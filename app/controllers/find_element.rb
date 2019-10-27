@@ -149,6 +149,7 @@ end
 # browser: the browser watir object that manage the web operaitons
 #
 def init_function(browser, type, name_or_id="", text=nil, execution=false)
+  puts 'type'
   puts type
   if type == 'Table'
     p 'gototable'
@@ -183,23 +184,34 @@ def constructor_function(elements)
   url = elements.shift
   execution = elements.shift
   browser = setup_browser(url)
+  puts 'browser_created'
   result = nil
   elements.each do |element|
-    type = element[:elem_type]
+    if element.has_key?(:elem_type)
+      type = element[:elem_type]
+    else
+      type = element['elem_type']
+    end
     name_or_id = nil
     text = nil
     if element.has_key?(:name_elem)
       name_or_id = element[:name_elem]
+    elsif element.has_key?('name_elem')
+      name_or_id = element['name_elem']
     end
     if element.has_key?(:text)
       text = element[:text]
+    elsif element.has_key?('text')
+      text = element['text']
     end
+    puts 'go to init'
     result = init_function(browser, type, name_or_id, text, execution)
     if result == nil
       puts "Error"
       browser.close
       return nil
     end
+    print('ok')
   end
   sleep(2)
   return result
