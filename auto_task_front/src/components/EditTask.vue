@@ -42,6 +42,9 @@
               <option>Write</option>
             </select>
           </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" v-model="newStep.text_elem" id="inputTextElem" placeholder="Text element" />
+          </div>
         </div>
         <button type="submit">ADD STEP</button>
       </form>
@@ -82,7 +85,7 @@ export default {
       console.log("Agregar Step");
       this.$http.post("http://localhost:3000/steps/", {url: document.getElementById("url").value, elem_type: this.newStep.elem_type, 
       name_elem: this.newStep.name_elem, elem_action: this.newStep.elem_action,
-      task_id: this.id, user_id: 1, page_id: this.page.id})
+      task_id: this.id, user_id: 1, page_id: this.page.id, text_elem: this.newStep.text_elem})
       .then(res => console.log("Step created"));
       this.task.steps.push(this.newStep);
       this.newStep = {};
