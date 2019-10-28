@@ -1,4 +1,4 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :step
+  has_many :steps
 end
