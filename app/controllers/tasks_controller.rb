@@ -13,6 +13,12 @@ class TasksController < ApplicationController
     render json: @task
   end
 
+  # GET /tasks/'id'/steps
+  def stepsByTask
+    @task = Task.find(params[:id])
+    render json: @task.step
+  end
+
   # POST /tasks
   def create
     @task = Task.new(task_params)
