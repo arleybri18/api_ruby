@@ -1,3 +1,3 @@
 class Page < ApplicationRecord
-    has_many :step
+    has_many :steps
 end

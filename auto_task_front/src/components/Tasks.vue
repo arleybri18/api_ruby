@@ -35,23 +35,34 @@ export default {
   methods: {
     addTask(e) {
       e.preventDefault();
+      const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
       console.log("Agregar Task");
-      let task = this.newTask;
-      this.tasks.push(task);
-      this.$http.post("http://localhost:3000/tasks/", {name: task.name, description: task.description, user_id: 1})
-      .then(res => console.log("Task created"));
-      this.newTask = {};
+      this.$http.post("http://localhost:3000/tasks/", {name: this.newTask.name, description: this.newTask.description}, {headers: jwtHeader})
+      .then(res => {
+        this.tasks = res.body;
+        console.log("Task created");
+        this.newTask = {};
+      });
     },
     deleteTask(task) {
-      this.tasks.splice(this.tasks.indexOf(task), 1);
-      this.$http.delete("http://localhost:3000/tasks/"+task.id)
-      .then(res => alert("Task "+ task.name + " deleted"));
+      const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
+      this.$http.delete("http://localhost:3000/tasks/"+task.id, {headers: jwtHeader})
+      .then(res => {
+        this.tasks.splice(this.tasks.indexOf(task), 1);
+        if (this.tasks === undefined) {
+          this.tasks = [];
+        }
+        alert("Task "+ task.name + " had been deleted!")
+        }
+      );
     }
   },
   created() {
+    const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
+    console.log(jwtHeader);
     this.$http
-      .get("http://localhost:3000/tasks")
-      .then(res => (this.tasks = res.body));
+      .get("http://localhost:3000/tasks", {headers: jwtHeader})
+        .then(res => (this.tasks = res.body));
   }
 };
 </script>
