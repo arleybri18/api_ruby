@@ -4,7 +4,8 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.find_by(user_id: current_user.id)
+    @tasks = current_user.tasks
+    puts @tasks.to_json
     if @tasks
       render json: @tasks
     else
@@ -19,19 +20,11 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
-
+    # params[:task].merge(:user_id => current_user.id)
+    @task = Task.new(name: params[:task][:name], description: params[:task][:description], user_id: current_user.id)
+    puts "esta es task #{@task}"
     if @task.save
-      render json: @task, status: :created, location: @task
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /tasks/1
-  def update
-    if @task.update(task_params)
-      render json: @task
+      redirect_to tasks_path, format: :json
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -46,7 +39,7 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task_data = Task.find(params[:id])
-      @step = @task_data.step
+      @step = @task_data.steps
       @task = {id: @task_data.id, name: @task_data.name, 
               description: @task_data.description, steps: @step,
               created_at: @task_data.created_at, updated_at: @task_data.updated_at}
@@ -54,7 +47,6 @@ class TasksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def task_params
-
-      params.require(:task).permit(:name, :description, :enabled)
+      params.require(:task).permit(:name, :description)
     end
 end

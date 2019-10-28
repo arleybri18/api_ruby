@@ -33,7 +33,6 @@ export default {
     .then(jwt => {
         // console.log(JSON.parse(JSON.stringify(jwt.data)).jwt);
         const data = JSON.parse(JSON.stringify(jwt.data))
-        // console.log(data);
         localStorage.setItem('idToken', data.jwt)
         const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
         // console.log(localStorage.getItem('idToken'));
@@ -43,8 +42,10 @@ export default {
         console.log(err)
         this.$router.push({ path: "/" })
         alert("Not Authorized");
-      });
-      this.$router.push({ path: "/tasks" })  
+      }); 
+      if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
+        this.$router.push({ path: "/tasks" });
+      }      
     }
   }
 };

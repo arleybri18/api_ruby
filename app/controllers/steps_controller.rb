@@ -3,6 +3,7 @@ load 'find_element'
 class StepsController < ApplicationController
 
   before_action :set_step, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /steps
   def index
@@ -22,9 +23,10 @@ class StepsController < ApplicationController
     puts "Params"
     puts params
     puts "url:"
-    puts params[:url]
+    @url = Page.find(params[:url])
+    puts @url.url
     parameters = []
-    parameters.push(params[:url])
+    parameters.push(@url.url)
     execution = false
     parameters.push(execution)
     parameters.push(params)
@@ -33,14 +35,15 @@ class StepsController < ApplicationController
     
     if constructor_function(parameters) == nil
       puts 'nf'
-      render json: 'Element not found'
+      render json: 'Element not found', status: :unprocessable_entity
     else
       puts 'step_params'
       puts step_params
       @step = Step.new(step_params)
       if @step.save
         puts 'save ok'
-        render json: @step, status: :created, location: @step
+        @steps = Step.where(params[:task_id])
+        render json: @steps
       else
         puts 'error'
         render json: @step.errors, status: :unprocessable_entity
@@ -48,14 +51,6 @@ class StepsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /steps/1
-  def update
-    if @step.update(step_params)
-      render json: @step
-    else
-      render json: @step.errors, status: :unprocessable_entity
-    end
-  end
 
   # DELETE /steps/1
   def destroy
