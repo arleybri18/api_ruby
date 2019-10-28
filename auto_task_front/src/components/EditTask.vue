@@ -41,6 +41,9 @@
               <option>Write</option>
             </select>
           </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control" v-model="newStep.text_elem" id="inputTextElem" placeholder="Text element" />
+          </div>
         </div>
         <button type="submit">ADD STEP</button>
       </form>

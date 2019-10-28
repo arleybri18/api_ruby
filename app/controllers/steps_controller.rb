@@ -32,7 +32,7 @@ class StepsController < ApplicationController
     parameters.push(params)
     puts "list to function"
     puts parameters
-    
+    puts parameters[2].class
     if constructor_function(parameters) == nil
       puts 'nf'
       render json: 'Element not found', status: :unprocessable_entity
