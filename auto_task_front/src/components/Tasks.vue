@@ -77,9 +77,7 @@ export default {
     }
   },
   created() {
-    while (localStorage.getItem("idToken") === null){
-      console.log('wait for token');
-    }
+  
     const jwtHeader = {
       Authorization: "Bearer " + localStorage.getItem("idToken")
     };
