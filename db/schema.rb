@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_21_052225) do
+ActiveRecord::Schema.define(version: 2019_10_26_154039) do
 
   create_table "executions", force: :cascade do |t|
     t.integer "state"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_10_21_052225) do
     t.string "elem_type"
     t.string "name_elem"
     t.string "elem_action"
+    t.string "text_elem"
     t.index ["page_id"], name: "index_steps_on_page_id"
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
