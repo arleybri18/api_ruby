@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      this.$http.post("http://jsonplaceholder.typicode.com/posts", {
+      this.$http.post("http://localhost:3001/users", {
         fullname: this.user.fullname,
         email: this.user.email,
         password: this.user.password,
