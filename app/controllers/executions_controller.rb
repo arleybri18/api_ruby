@@ -1,6 +1,7 @@
 load 'find_element' 
 class ExecutionsController < ApplicationController
   before_action :set_execution, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /executions
   def index
@@ -17,9 +18,9 @@ class ExecutionsController < ApplicationController
   # POST /executions
   def create
     task = Task.find(params[:task_id])
-    page_id = task.step[0].page_id
+    page_id = task.steps[0].page_id
     page = Page.find(page_id)
-    steps = task.step
+    steps = task.steps
     steps_list = []
     steps.map {|s| steps_list.push(s.attributes)}
     steps_list.unshift(true)
@@ -29,8 +30,9 @@ class ExecutionsController < ApplicationController
       puts 'An unexpected error '
       return nil
     else
-      @execution = Execution.new(execution_params) 
+      @execution = Execution.new(execution_params)
       if @execution.save
+        @execution.state = 1;
         render json: @execution, status: :created, location: @execution
       else
         render json: @execution.errors, status: :unprocessable_entity

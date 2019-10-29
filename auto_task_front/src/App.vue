@@ -8,6 +8,7 @@
 import Login from './components/Login'
 import Tasks from './components/Tasks'
 import EditTask from './components/EditTask'
+import ExecutionTask from './components/ExecutionTask'
 
 export default {
   name: 'App',

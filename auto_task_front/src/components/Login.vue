@@ -23,8 +23,7 @@ export default {
     onSubmit(e) {
     e.preventDefault();
     // generate token for api
-    console.log(this.user.email + " " + this.user.password);
-    this.$http.post("http://localhost:3000/user_token/", {
+    this.$http.post("http://localhost:3001/user_token/", {
       auth: {
         email: this.user.email, 
         password: this.user.password
@@ -36,17 +35,22 @@ export default {
         localStorage.setItem('idToken', data.jwt)
         const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
         // console.log(localStorage.getItem('idToken'));
-        return this.$http.get('http://localhost:3000/tasks/', {headers: jwtHeader})
+      if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
+        this.$router.push({ path: "/tasks" });
+        return this.$http.get('http://localhost:3001/tasks/', {headers: jwtHeader})
+      };
+
       })
       .catch(err => {
         console.log(err)
         this.$router.push({ path: "/" })
         alert("Not Authorized");
       }); 
-      if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
-        this.$router.push({ path: "/tasks" });
-      }      
+    
     }
+  },
+  created(){
+    localStorage.removeItem('idToken');
   }
 };
 </script>
