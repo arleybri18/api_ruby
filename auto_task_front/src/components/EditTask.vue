@@ -73,14 +73,14 @@ export default {
     addPage(e) {
       e.preventDefault();
       let page = this.newPage;
-      this.$http.post("http://localhost:3000/pages/", {url: page.url})
+      this.$http.post("http://localhost:3000/api/v1/pages/", {url: page.url})
       .then(res => (this.page = res.body));
       console.log("Add Page");
     },
     addStep(e) {
       e.preventDefault();
       console.log("Agregar Step");
-      this.$http.post("http://localhost:3000/steps/", {elem_type: this.newStep.elem_type, 
+      this.$http.post("http://localhost:3000/api/v1/steps/", {elem_type: this.newStep.elem_type, 
       name_elem: this.newStep.name_elem, elem_action: this.newStep.elem_action,
       task_id: this.id, user_id: 1, page_id: this.page.id})
       .then(res => console.log("Step created"));
@@ -89,20 +89,20 @@ export default {
     },
     deleteStep(step) {
       this.task.steps.splice(this.task.steps.indexOf(step), 1);
-      this.$http.delete("http://localhost:3000/steps/"+step.id)
+      this.$http.delete("http://localhost:3000/api/v1/steps/"+step.id)
       .then(res => alert("Step "+ step.id + " deleted"));
     },
     getPage(){
       console.log(this.steps);
     // this.$http
-    //   .get("http://localhost:3000/pages/" + this.task.steps[-1].page_id)
+    //   .get("http://localhost:3000/api/v1/pages/" + this.task.steps[-1].page_id)
     //   .then(res => (this.page = res.body));
     }
   },
   created() {
     console.log("llegue " + this.id);
     this.$http
-      .get("http://localhost:3000/tasks/" + this.id)
+      .get("http://localhost:3000/api/v1/tasks/" + this.id)
       .then(res => (this.task = res.body));
 
       this.getPage();

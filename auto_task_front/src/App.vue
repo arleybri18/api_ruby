@@ -8,12 +8,15 @@
 import Login from './components/Login'
 import Tasks from './components/Tasks'
 import EditTask from './components/EditTask'
+import Register from './components/Register'
+
 
 export default {
   name: 'App',
   components: {
     Login,
-    Tasks
+    Tasks,
+    Register
   }
 }
 </script>

@@ -38,19 +38,19 @@ export default {
       console.log("Agregar Task");
       let task = this.newTask;
       this.tasks.push(task);
-      this.$http.post("http://localhost:3000/tasks/", {name: task.name, description: task.description, user_id: 1})
+      this.$http.post("http://localhost:3000/api/v1/tasks/", {name: task.name, description: task.description, user_id: 1})
       .then(res => console.log("Task created"));
       this.newTask = {};
     },
     deleteTask(task) {
       this.tasks.splice(this.tasks.indexOf(task), 1);
-      this.$http.delete("http://localhost:3000/tasks/"+task.id)
+      this.$http.delete("http://localhost:3000/api/v1/tasks/"+task.id)
       .then(res => alert("Task "+ task.name + " deleted"));
     }
   },
   created() {
     this.$http
-      .get("http://localhost:3000/tasks")
+      .get("http://localhost:3000/api/v1/tasks")
       .then(res => (this.tasks = res.body));
   }
 };
