@@ -19,6 +19,7 @@ Vue.use(BootstrapVue)
 import Login from './components/Login.vue';
 import Tasks from './components/Tasks.vue';
 import EditTask from './components/EditTask.vue';
+import ExecutionTask from './components/ExecutionTask'
 
 Vue.config.productionTip = false
 
@@ -37,6 +38,11 @@ const router = new VueRouter({
     {
       path: '/tasks/:id',
       component: EditTask,
+      props: true
+    },
+    {
+      path: '/execution/:id',
+      component: ExecutionTask,
       props: true
     }
   ]
