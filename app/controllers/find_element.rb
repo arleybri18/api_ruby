@@ -22,18 +22,20 @@ def find_element_table(browser, element_name, execution=false, taskName)
     #find element table
     if browser.th(visible_text: element_name).present?
       table_head = browser.th(visible_text: element_name)
+      table_content = table_head.parent.parent.following_sibling
       puts table_head.text
-
-      unless execution == false
-        #extract info, send to copy
-        table_content = table_head.parent.parent.following_sibling
-        return copy(table_content, taskName)
-      end
-      return 'ok'
+    elsif browser.th.children(visible_text: element_name).present?
+      table_head = browser.th.child(visible_text: element_name)
+      table_content = table_head.parent.parent.parent.following_sibling
     else
       puts not_found
       return nil
     end
+    unless execution == false
+      #extract info, send to copy
+       return copy(table_content, taskName)
+    end
+    return 'ok'
 end
 
 ##

@@ -16,6 +16,7 @@ export default {
   components: {
     Login,
     Tasks,
+    EditTask,
     Register
   },
   computed: {

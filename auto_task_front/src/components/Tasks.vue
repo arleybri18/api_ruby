@@ -10,12 +10,14 @@
       </form>
     </section>
 
-    <section class="task-list">
-      <h1 class="font-weight-bold"> My Tasks</h1>
-      <ul>
-        <li v-for="task in tasks">
+    <section class="task-list" v-if="tasks.length">
+      <h1 class="font-weight-bold">MY TASKS</h1>
+      <ul class="list-group">
+        <li v-for="task in tasks" class="list-group-item bg-transparent">
+          <div class="d-flex justify-content-start">
           {{ task.name }} - {{ task.description }}
-          <div>
+          </div>
+          <div class="btn-group" role="group" aria-label="Basic example">
             <button>
               <router-link v-bind:to="'/tasks/' + task.id">EDIT</router-link>
             </button>

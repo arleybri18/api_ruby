@@ -26,6 +26,7 @@ export default {
     onSubmit(e) {
     e.preventDefault();
     // generate token for api
+    console.log(`${this.user.email} ${this.user.password}`);
     this.$http.post("http://localhost:3001/user_token/", {
       auth: {
         email: this.user.email, 
