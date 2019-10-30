@@ -69,7 +69,11 @@ def find_element_button(browser, element_name, execution=false)
   button = nil
   not_found = "element not found"
 
-    if browser.button(visible_text: element_name).present?
+    if browser.element(name: element_name).present?
+      button = browser.element(name: element_name)
+    elsif browser.element(id: element_name).present?
+      button = browser.element(id: element_name)
+    elsif browser.button(visible_text: element_name).present?
       button = browser.button(visible_text: element_name)
       puts button.text
     elsif browser.input(type: "submit", value: element_name).present?
@@ -122,6 +126,7 @@ def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
     return ids
   else
     puts 'no if'
+    puts element_id
     input = browser.text_field(name: element_id)
     if input.exists?
       input.set(text)

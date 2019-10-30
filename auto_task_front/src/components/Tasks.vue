@@ -2,7 +2,7 @@
   <div class="container">
     <component :is="layout"></component>
     <section class="add-tasks">
-      <h1>Add New Task</h1>
+      <h1 class="font-weight-bold">ADD NEW TASK</h1>
       <form v-on:submit="addTask">
         <input type="text" v-model="newTask.name" placeholder="Name" />
         <input type="text" v-model="newTask.description" placeholder="Description" />
@@ -11,7 +11,7 @@
     </section>
 
     <section class="task-list">
-      <h1>Tasks list</h1>
+      <h1 class="font-weight-bold"> My Tasks</h1>
       <ul>
         <li v-for="task in tasks">
           {{ task.name }} - {{ task.description }}
