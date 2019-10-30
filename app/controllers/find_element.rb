@@ -5,6 +5,7 @@
 ##
 # Function that setup the watir browser
 #
+
 def setup_browser(url)
   browser = Watir::Browser.new :firefox, headless: true
   browser.goto url
@@ -16,8 +17,7 @@ end
 # element_name are required, execution are optional
 # depending on the state of use
 # Return: ok if the element exists, and nil if not found
-def find_element_table(browser, element_name, execution=false)
-
+def find_element_table(browser, element_name, execution=false, taskName)
   not_found = "element not found"
     #find element table
     if browser.th(visible_text: element_name).present?
@@ -27,9 +27,9 @@ def find_element_table(browser, element_name, execution=false)
       unless execution == false
         #extract info, send to copy
         table_content = table_head.parent.parent.following_sibling
-        copy(table_content)
+        return copy(table_content, taskName)
       end
-      return "ok"
+      return 'ok'
     else
       puts not_found
       return nil
@@ -40,8 +40,24 @@ end
 # function that prepare the selenium object to extract the text
 # first implementation just puts element.text
 #
-def copy(element)
-  puts element.text
+def copy(element, taskName)
+
+  load 'export_sheet.rb'
+  #puts element.text
+  #puts "claaaseee"
+  table = []
+  element.children.each do |child|
+    rows = []
+    child.children.each do |ch|
+      #puts ch.text
+      rows.push(ch.text)
+    end
+    table.push(rows)
+  end
+  puts "the table"
+  print table
+  return newSheet(table, taskName)
+
 end
 
 ##
@@ -136,8 +152,7 @@ def find_element_text(browser, element_id, execution=false)
   else
     text = browser.element(id: element_id)
     if text.exists?
-      copy(text)
-      return "ok"
+      return text
     else
       return nil
     end
@@ -148,12 +163,12 @@ end
 # call the function required
 # browser: the browser watir object that manage the web operaitons
 #
-def init_function(browser, type, name_or_id="", text=nil, execution=false)
+def init_function(browser, type, name_or_id="", text=nil, execution=false, taskName)
   puts 'type'
   puts type
   if type == 'Table'
     p 'gototable'
-    return find_element_table(browser, name_or_id, execution)
+    return find_element_table(browser, name_or_id, execution, taskName)
   elsif type == 'Button'
     p 'gotobutton'
     return find_element_button(browser, name_or_id, execution)
@@ -179,7 +194,7 @@ end
 #     {type: 'table', name_or_id: 'Student'}]
 # if any of the functions fail, print an error, close the browser and retur nil
 # if no errors, return ok
-def constructor_function(elements)
+def constructor_function(elements, taskName=nil)
 
   url = elements.shift
   execution = elements.shift
@@ -205,15 +220,16 @@ def constructor_function(elements)
       text = element['text']
     end
     puts 'go to init'
-    result = init_function(browser, type, name_or_id, text, execution)
+    result = init_function(browser, type, name_or_id, text, execution, taskName)
     if result == nil
       puts "Error"
       browser.close
       return nil
     end
-    print('ok')
+    puts ('ok')
   end
   sleep(2)
+  browser.close
   return result
 end
 
