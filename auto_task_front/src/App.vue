@@ -10,13 +10,13 @@ const default_layout = 'default';
 import Login from './components/Login'
 import Tasks from './components/Tasks'
 import EditTask from './components/EditTask'
-import ExecutionTask from './components/ExecutionTask'
-
+import Register from './components/Register'
 export default {
   name: 'App',
   components: {
     Login,
-    Tasks
+    Tasks,
+    Register
   },
   computed: {
     layout() {
@@ -36,7 +36,6 @@ export default {
   color: #D6D6D6;
   margin-top: 60px;
 }
-
 html, body{
   /* background-color: #D6D6D6; */
   background-image: url("./assets/bg_table.jpeg");

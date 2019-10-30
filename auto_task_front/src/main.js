@@ -19,6 +19,9 @@ Vue.use(BootstrapVue)
 import Login from './components/Login.vue';
 import Tasks from './components/Tasks.vue';
 import EditTask from './components/EditTask.vue';
+import Register from './components/Register.vue';
+
+
 import ExecutionTask from './components/ExecutionTask'
 import Default from './layouts/Default.vue';
 import NoSidebar from './layouts/NoSidebar.vue';
@@ -47,6 +50,11 @@ const router = new VueRouter({
       meta: { layout: "default"},
       component: EditTask,
       props: true
+    },
+    {
+      path: '/Register',
+      meta: { layout: "no-sidebar"},
+      component: Register
     },
     {
       path: '/execution/:id',
