@@ -50,3 +50,11 @@ gem 'rack-cors' #this is a necessary for communication with our client
 #gems to initialize watir!
 gem 'watir', '~> 6.16.5'
 gem 'webdrivers', '~> 4.1.3'
+
+#gems to manage google sheets!
+gem "google_drive"
+gem 'google-api-client', '~> 0.11'
+
+
+#json
+gem 'json', '~> 1.8', '>= 1.8.3'
