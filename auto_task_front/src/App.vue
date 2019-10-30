@@ -29,6 +29,9 @@ export default {
   margin-top: 60px;
 }
 html, body{
+      background-image: url("./assets/back4.jpg");
+      background-repeat: no-repeat;
+      background-size: contain;
       width:100%;
       height:100%;
       margin:0px;
