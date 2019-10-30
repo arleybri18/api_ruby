@@ -129,8 +129,8 @@ button:hover {
 
 a:hover {
   text-decoration: none;
-  background-color: #711f1b;
-  color: #e0dada;
+  background-color: #4A4343;
+  color: #be5256;
 }
 
 @-webkit-keyframes shake {

@@ -7,9 +7,11 @@
         <input type="email" v-model="user.email" placeholder="Email" />
         <input type="password_digest" v-model="user.password_digest" placeholder="Password" />
         <button v-on:click.prevent="onSubmit">Register</button>
+        <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
       <div v-if="submitted">
          <h3>Registered</h3>
+         <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </div>
     </section>
   </div>
@@ -84,7 +86,8 @@ input {
   background-color: #e0dada;
   border: none;
 }
-button {
+button,
+a {
   height: 40px;
   padding: 5px 5px;
   margin: 10px 0px;
@@ -97,6 +100,12 @@ button {
 }
 button:hover {
   background-color: #711f1b;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #711f1b;
+  color: #e0dada;
 }
 @-webkit-keyframes shake {
   from,
