@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="add-url">
-      <h1>TASK: {{ task.name }}</h1>
+      <h1 class="font-weight-bold">TASK: {{ task.name }}</h1>
       <form v-on:submit="addPage">
         <input id="url" type="text" v-model="newPage.url" placeholder="URL" />
         <button type="submit">ADD URL</button>
@@ -9,15 +9,15 @@
     </section>
 
     <section class="step-list">
-      <h1>Steps list</h1>
+      <h1 class="font-weight-bold">STEPS</h1>
 
-      <h4>
+      <h4 class="font-weight-bold">
         Current URL:
         <span>{{ page.url }}</span>
       </h4>
 
       <form v-on:submit="addStep">
-        <div class="row d-flex justify-content-center text-center">
+        <div class="row d-flex justify-content-center align-items-center">
           <label for="elementTypeSelect" class="col-sm-2 col-form-label">Element Type</label>
           <div class="col-sm-2">
             <select
@@ -69,8 +69,8 @@
         </div>
         <button type="submit">ADD STEP</button>
       </form>
-      <ul>
-        <li v-for="s in steps">
+      <ul  class="list-group">
+        <li v-for="s in steps"  class="list-group-item bg-transparent">
           <b>Elemen type:</b>
           {{ s.elem_type }}
           <b>Name:</b>
@@ -136,7 +136,6 @@ export default {
           { headers: jwtHeader }
         )
         .then(res => {
-          console.log("Step created");
           this.steps = res.body;
           this.newStep = {};
           this.getPage(this.steps);
@@ -157,7 +156,7 @@ export default {
         })
         .then(res => {
           this.steps.splice(this.steps.indexOf(step), 1);
-          console.log(this.steps);
+          // console.log(this.steps);
           if (this.steps === undefined) {
             this.steps = [];
             this.page = {};
@@ -194,7 +193,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       let elem = event.target.value;
-      console.log(elem);
+      // console.log(elem);
       if (elem === "Text_input") {
         this.$http
           .post(
@@ -211,7 +210,7 @@ export default {
           )
           .then(res => {
             console.log("Call steps");
-            console.log(res.body);
+            // console.log(res.body);
             this.nameElems = res.body;
           })
           .catch(err => {

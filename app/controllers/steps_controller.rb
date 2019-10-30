@@ -52,7 +52,9 @@ class StepsController < ApplicationController
         @step = Step.new(step_params)
         if @step.save
           puts 'save ok'
-          @steps = Step.where(params[:task_id])
+          # @steps = Step.where(params[:task_id])
+          @steps = Task.find(params[:task_id]).steps
+          puts @steps
           render json: @steps
         else
           puts 'error'
