@@ -69,15 +69,15 @@ def newSheet(table, taskName)
   #fill the sheet with the data 'table'
   data = [
           {
-            range: 'A:C',
+            range: 'A:Z',
             majorDimension: "ROWS",
             values: table,
           }
          ]
-  value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:C',
+  value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:Z',
                                                               majorDimension: "ROWS", values: table)
   result = service.update_spreadsheet_value(spreadsheet.spreadsheet_id,
-                                          'A:C',
+                                          'A:Z',
                                           value_range_object,
                                           value_input_option: 'RAW')
   puts = "#{result.updated_cells} cells updated."

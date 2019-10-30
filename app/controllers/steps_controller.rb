@@ -33,20 +33,33 @@ class StepsController < ApplicationController
     puts "list to function"
     puts parameters
     puts parameters[2].class
-    if constructor_function(parameters) == nil
-      puts 'nf'
-      render json: 'Element not found', status: :unprocessable_entity
+    if params[:elem_type] == 'Text_input' &&  params[:name_elem] == nil
+      puts "entre en el if de elem_type"
+      list_elements = constructor_function(parameters)
+      puts "esto es list elements dentro del if #{list_elements}"
+      p list_elements
+      render json: list_elements
     else
-      puts 'step_params'
-      puts step_params
-      @step = Step.new(step_params)
-      if @step.save
-        puts 'save ok'
-        @steps = Step.where(params[:task_id])
-        render json: @steps
+      list_elements = constructor_function(parameters)
+      puts "esto es list elements #{list_elements}"
+      p list_elements
+      if list_elements == nil
+        puts 'nf'
+        render json: 'Element not found', status: :unprocessable_entity
       else
-        puts 'error'
-        render json: @step.errors, status: :unprocessable_entity
+        puts 'step_params'
+        puts step_params
+        @step = Step.new(step_params)
+        if @step.save
+          puts 'save ok'
+          # @steps = Step.where(params[:task_id])
+          @steps = Task.find(params[:task_id]).steps
+          puts @steps
+          render json: @steps
+        else
+          puts 'error'
+          render json: @step.errors, status: :unprocessable_entity
+        end
       end
     end
   end

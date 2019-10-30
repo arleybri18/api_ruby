@@ -5,7 +5,7 @@
       <form v-if="!submitted">
         <input type="fullname" v-model="user.fullname" placeholder="Fullname" />
         <input type="email" v-model="user.email" placeholder="Email" />
-        <input type="password_digest" v-model="user.password_digest" placeholder="Password" />
+        <input type="password" v-model="user.password_digest" placeholder="Password" />
         <button v-on:click.prevent="onSubmit">Register</button>
         <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
