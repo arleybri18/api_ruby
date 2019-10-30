@@ -20,6 +20,11 @@ import Login from './components/Login.vue';
 import Tasks from './components/Tasks.vue';
 import EditTask from './components/EditTask.vue';
 import ExecutionTask from './components/ExecutionTask'
+import Default from './layouts/Default.vue';
+import NoSidebar from './layouts/NoSidebar.vue';
+
+Vue.component('default-layout', Default);
+Vue.component('no-sidebar-layout', NoSidebar);
 
 Vue.config.productionTip = false
 
@@ -29,19 +34,23 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
+      meta: { layout: "no-sidebar"},
       component: Login,
     },
     {
       path: '/tasks',
+      meta: { layout: "default"},
       component: Tasks,
     },
     {
       path: '/tasks/:id',
+      meta: { layout: "default"},
       component: EditTask,
       props: true
     },
     {
       path: '/execution/:id',
+      meta: { layout: "default"},
       component: ExecutionTask,
       props: true
     }

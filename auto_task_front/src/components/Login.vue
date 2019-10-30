@@ -59,6 +59,7 @@ export default {
 <style scoped>
 html,
 body {
+  /* background-color: #95EEFF; */
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -66,7 +67,7 @@ body {
 }
 
 body {
-  background-image: url("https://images-assets.nasa.gov/image/6900952/6900952~orig.jpg");
+
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -76,9 +77,11 @@ body {
 }
 
 section {
-  background-color: rgba(0, 0, 0, 0.72);
-  width: 25%;
-  min-height: 25%;
+  background-color: rgba(24, 25, 29, 0.72);
+  color: aliceblue;
+  border: solid 1px #ff1d00;
+  width: 35%;
+  min-height: 35%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -87,9 +90,11 @@ section {
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 50px;
 }
 h2 {
+  padding: 10px;
+  font-size:4rem; 
   font-family: "Archivo Black", sans-serif;
   color: #e0dada;
   margin-left: auto;
@@ -109,12 +114,14 @@ button {
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #e0dada;
+  color: #4A4343;
   cursor: pointer;
   font-size: 16px;
 }
 button:hover {
-  background-color: #711f1b;
+  background-color: #4A4343;
+  border: solid 1px #be5256;
+  color: #be5256;
 }
 
 @-webkit-keyframes shake {

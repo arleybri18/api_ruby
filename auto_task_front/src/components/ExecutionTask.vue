@@ -1,25 +1,25 @@
 <template>
-<div>
+  <div>
     <section class="execution">
       <h1>TASK: {{ task.name }}</h1>
     </section>
 
-        <section class="execution" v-if="result.state === 0">
-      <div>
-        <img src="../assets/Pacman-1s-200px.svg">
+    <section class="execution" v-if="result.state === 0">
+      <div class="image">
+        <img src="../assets/Pacman-1s-200px.svg" />
         <div style="background:url(../assets/Pacman-1s-200px.svg);background-repeat:repeat"></div>
         <p>In progress!</p>
       </div>
     </section>
 
-            <section class="execution" v-if="result.state === 1">
-      <div>
-        <img src="../assets/ok-1.6s-200px.svg">
+    <section class="execution" v-if="result.state === 1">
+      <div class="image">
+        <img src="../assets/ok-1.6s-200px.svg" />
         <div style="background:url(../assets/ok-1.6s-200px.svg);background-repeat:repeat"></div>
         <p>Load Successfull!</p>
       </div>
     </section>
-</div>
+  </div>
 </template>
 
 <script>
@@ -31,9 +31,7 @@ export default {
       result: {}
     };
   },
-  methods: {
-
-  },
+  methods: {},
   created() {
     const jwtHeader = {
       Authorization: "Bearer " + localStorage.getItem("idToken")
@@ -43,16 +41,19 @@ export default {
       .then(res => {
         //console.log(res.body);
         this.task = res.body;
-    });
+      });
     this.result.state = 0;
 
     this.$http
-    .post("http://localhost:3001/executions/", 
-      {task_id: this.id, state: 0 }, { headers: jwtHeader })
-    .then(res => {
-      this.result = res.body;
-      console.log(res.body);
-    });
+      .post(
+        "http://localhost:3001/executions/",
+        { task_id: this.id, state: 0 },
+        { headers: jwtHeader }
+      )
+      .then(res => {
+        this.result = res.body;
+        console.log(res.body);
+      });
   }
 };
 </script>
@@ -67,5 +68,9 @@ export default {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+}
+.image img {
+  width: 45%;
+  height: 45%;
 }
 </style>
