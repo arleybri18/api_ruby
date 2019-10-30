@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :update, :destroy]
+  before_action :authenticate_user
 
   # GET /pages
   def index
@@ -10,7 +11,12 @@ class PagesController < ApplicationController
 
   # GET /pages/1
   def show
-    render json: @page
+    puts @page
+    if @page
+      render json: @page
+    else
+      render json: []
+    end
   end
 
   # POST /pages
@@ -46,6 +52,6 @@ class PagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def page_params
-      params.require(:page).permit(:url, :step_id)
+      params.require(:page).permit(:url)
     end
 end

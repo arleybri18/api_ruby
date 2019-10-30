@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_074433) do
+ActiveRecord::Schema.define(version: 2019_10_29_224330) do
 
   create_table "executions", force: :cascade do |t|
     t.integer "state"
@@ -22,18 +22,20 @@ ActiveRecord::Schema.define(version: 2019_10_16_074433) do
 
   create_table "pages", force: :cascade do |t|
     t.string "url"
-    t.integer "step_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["step_id"], name: "index_pages_on_step_id"
   end
 
   create_table "steps", force: :cascade do |t|
-    t.string "name"
-    t.string "info_step"
     t.integer "task_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "page_id"
+    t.string "elem_type"
+    t.string "name_elem"
+    t.string "elem_action"
+    t.string "text_elem"
+    t.index ["page_id"], name: "index_steps_on_page_id"
     t.index ["task_id"], name: "index_steps_on_task_id"
   end
 
@@ -57,7 +59,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_074433) do
   end
 
   add_foreign_key "executions", "tasks"
-  add_foreign_key "pages", "steps"
+  add_foreign_key "steps", "pages"
   add_foreign_key "steps", "tasks"
   add_foreign_key "tasks", "users"
 end

@@ -1,15 +1,18 @@
 <template>
   <div>
     <section>
-      <h2>Login</h2>
-      <form>
+      <h2>AuTo Task</h2>
+      <form v-if="!submitted">
+        <input type="fullname" v-model="user.fullname" placeholder="Fullname" />
         <input type="email" v-model="user.email" placeholder="Email" />
-        <input type="password" v-model="user.password" placeholder="password" />
-        <button v-on:click="onSubmit">Log in</button>
-        <button>
-          <router-link v-bind:to="'/Register'">Sign up</router-link>
-        </button>
+        <input type="password_digest" v-model="user.password_digest" placeholder="Password" />
+        <button v-on:click.prevent="onSubmit">Register</button>
+        <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
+      <div v-if="submitted">
+         <h3>Registered</h3>
+         <button><router-link v-bind:to="'/'">Log In</router-link></button>
+      </div>
     </section>
   </div>
 </template>
@@ -19,41 +22,21 @@ export default {
   data() {
     return {
       user: {},
-      token: ""
-    };
+      submitted: false,
+    }
   },
   methods: {
     onSubmit(e) {
-    e.preventDefault();
-    // generate token for api
-    this.$http.post("http://localhost:3001/user_token/", {
-      auth: {
-        email: this.user.email, 
-        password: this.user.password
-        }
-      })
-    .then(jwt => {
-        // console.log(JSON.parse(JSON.stringify(jwt.data)).jwt);
-        const data = JSON.parse(JSON.stringify(jwt.data))
-        localStorage.setItem('idToken', data.jwt)
-        const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
-        // console.log(localStorage.getItem('idToken'));
-      if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
-        this.$router.push({ path: "/tasks" });
-        return this.$http.get('http://localhost:3001/tasks/', {headers: jwtHeader})
-      };
-
-      })
-      .catch(err => {
-        console.log(err)
-        this.$router.push({ path: "/" })
-        alert("Not Authorized");
-      }); 
-    
+      this.$http.post("http://localhost:3001/users", {
+        fullname: this.user.fullname,
+        email: this.user.email,
+        password_digest: this.user.password_digest,
+        enabled: 1
+      }).then(function(data){
+        console.log(data);
+        this.submitted = true;
+      });
     }
-  },
-  created(){
-    localStorage.removeItem('idToken');
   }
 };
 </script>
@@ -62,15 +45,13 @@ export default {
 <style scoped>
 html,
 body {
-  /* background-color: #95EEFF; */
   width: 100%;
   height: 100%;
   margin: 0px;
   font-family: "Work Sans", sans-serif;
 }
-
 body {
-
+  background-image: url("https://images-assets.nasa.gov/image/6900952/6900952~orig.jpg");
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -78,13 +59,10 @@ body {
   align-items: center;
   color: #fff;
 }
-
 section {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
-  width: 35%;
-  min-height: 35%;
+  background-color: rgba(0, 0, 0, 0.72);
+  width: 25%;
+  min-height: 25%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -93,11 +71,9 @@ section {
 form {
   display: flex;
   flex-direction: column;
-  padding: 50px;
+  padding: 15px;
 }
 h2 {
-  padding: 10px;
-  font-size:4rem; 
   font-family: "Archivo Black", sans-serif;
   color: #e0dada;
   margin-left: auto;
@@ -110,29 +86,27 @@ input {
   background-color: #e0dada;
   border: none;
 }
-button, a {
+button,
+a {
   height: 40px;
   padding: 5px 5px;
   margin: 10px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4A4343;
+  color: #e0dada;
   cursor: pointer;
-  font-size: 16px; 
+  font-size: 16px;
 }
 button:hover {
-  background-color: #4A4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #711f1b;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4A4343;
-  color: #be5256;
+  background-color: #711f1b;
+  color: #e0dada;
 }
-
 @-webkit-keyframes shake {
   from,
   to {
@@ -155,7 +129,6 @@ a:hover {
     transform: translate(10px, 0, 0);
   }
 }
-
 .shake {
   animation-name: shake;
   animation-duration: 1s;
