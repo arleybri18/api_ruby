@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <button class="btn btn-primary">
-      <router-link v-bind:to="'/'">LOG OUT</router-link>
-    </button>
+    <component :is="layout"></component>
     <section class="add-tasks">
       <h1>Add New Task</h1>
       <form v-on:submit="addTask">
@@ -77,22 +75,47 @@ export default {
     }
   },
   created() {
-  
     const jwtHeader = {
       Authorization: "Bearer " + localStorage.getItem("idToken")
     };
     console.log(jwtHeader);
     this.$http
       .get("http://localhost:3001/tasks", { headers: jwtHeader })
-      .then(res => (this.tasks = res.body));
+      .then(res => (this.tasks = res.body))
+      .catch(error => {
+        if (error.status === 401) {
+          this.$router.push({ path: "/" });
+          alert("Not Authorized");
+        } else {
+          console.log(error);
+        }
+      });
   }
 };
 </script>
 
-<style>
+<style scoped>
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  font-family: "Work Sans", sans-serif;
+}
+
+body {
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
 .add-tasks {
-  background-color: rgba(29, 24, 24, 0.72);
+  background-color: rgba(24, 25, 29, 0.72);
   color: aliceblue;
+  border: solid 1px #ff1d00;
   width: 50%;
   min-height: 25%;
   display: flex;
@@ -120,24 +143,28 @@ a {
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #e0dada;
+  color: #4a4343;
   cursor: pointer;
   font-size: 16px;
 }
 
 button:hover {
-  background-color: #711f1b;
+  background-color: #4a4343;
+  border: solid 1px #be5256;
+  color: #be5256;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #711f1b;
-  color: #e0dada;
+  background-color: #4a4343;
+  border: solid 1px #be5256;
+  color: #be5256;
 }
 
 .task-list {
   background-color: rgba(24, 25, 29, 0.72);
   color: aliceblue;
+  border: solid 1px #ff1d00;
   width: 70%;
   min-height: 25%;
   display: flex;

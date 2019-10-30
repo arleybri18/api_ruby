@@ -197,8 +197,9 @@ export default {
 
 <style>
 .add-url {
-  background-color: rgba(29, 24, 24, 0.72);
+  background-color: rgba(24, 25, 29, 0.72);
   color: aliceblue;
+  border: solid 1px #ff1d00;
   width: 50%;
   min-height: 25%;
   display: flex;
