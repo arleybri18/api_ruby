@@ -19,7 +19,8 @@ Vue.use(BootstrapVue)
 import Login from './components/Login.vue';
 import Tasks from './components/Tasks.vue';
 import EditTask from './components/EditTask.vue';
-import ExecutionTask from './components/ExecutionTask'
+import Register from './components/Register.vue';
+
 
 Vue.config.productionTip = false
 
@@ -41,8 +42,8 @@ const router = new VueRouter({
       props: true
     },
     {
-      path: '/execution/:id',
-      component: ExecutionTask,
+      path: '/Register',
+      component: Register,
       props: true
     }
   ]

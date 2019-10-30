@@ -8,13 +8,13 @@
 import Login from './components/Login'
 import Tasks from './components/Tasks'
 import EditTask from './components/EditTask'
-import ExecutionTask from './components/ExecutionTask'
-
+import Register from './components/Register'
 export default {
   name: 'App',
   components: {
     Login,
-    Tasks
+    Tasks,
+    Register
   }
 }
 </script>
@@ -28,11 +28,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 html, body{
-	width:100%;
-	height:100%;
-	margin:0px;
-	font-family: 'Work Sans', sans-serif;
+      width:100%;
+      height:100%;
+      margin:0px;
+      font-family: 'Work Sans', sans-serif;
 }
 </style>

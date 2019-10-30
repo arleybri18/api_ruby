@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_26_154039) do
+ActiveRecord::Schema.define(version: 2019_10_29_224330) do
 
   create_table "executions", force: :cascade do |t|
     t.integer "state"
@@ -50,12 +50,12 @@ ActiveRecord::Schema.define(version: 2019_10_26_154039) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.string "fullname"
     t.string "email"
     t.string "password_digest"
     t.integer "enabled"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "executions", "tasks"
