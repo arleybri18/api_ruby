@@ -20,14 +20,19 @@
         <div class="row d-flex justify-content-center text-center">
           <label for="elementTypeSelect" class="col-sm-2 col-form-label">Element Type</label>
           <div class="col-sm-2">
-            <select class="form-control" v-model="newStep.elem_type" id="elementTypeSelect">
+            <select
+              class="form-control"
+              @change="getType($event)"
+              v-model="newStep.elem_type"
+              id="elementTypeSelect"
+            >
               <option id="text_input">Text_input</option>
               <option id="title">Text</option>
               <option id="button">Button</option>
               <option id="table">Table</option>
             </select>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3" v-if="newStep.elem_type !== 'Text_input'">
             <input
               type="text"
               class="form-control"
@@ -36,18 +41,23 @@
               placeholder="Name element"
             />
           </div>
+          <div class="col-sm-3" v-if="newStep.elem_type === 'Text_input'">
+            <select class="form-control" v-model="newStep.name_elem" id="elementInputSelect">
+              <option v-for="el in nameElems">{{el}}</option>
+            </select>
+          </div>
           <label for="elementActionSelect" class="col-sm-2 col-form-label">
             Element
             Action
           </label>
           <div class="col-sm-2">
             <select class="form-control" v-model="newStep.elem_action" id="elementActionSelect">
-              <option>Click</option>
-              <option>Copy</option>
-              <option>Write</option>
+              <option v-if="newStep.elem_type === 'Button'">Click</option>
+              <option v-if="newStep.elem_type === 'Table' || newStep.elem_type === 'Text'">Copy</option>
+              <option v-if="newStep.elem_type === 'Text_input'">Write</option>
             </select>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3" v-if="newStep.elem_type === 'Text_input'">
             <input
               type="text"
               class="form-control"
@@ -83,6 +93,7 @@ export default {
       id: this.$route.params.id,
       task: {},
       steps: [],
+      nameElems: [],
       page: {},
       newPage: {},
       newStep: {}
@@ -103,6 +114,7 @@ export default {
         )
         .then(res => (this.page = res.body));
       console.log("Page agregada");
+      this.newPage.url = "";
     },
     addStep(e) {
       e.preventDefault();
@@ -145,8 +157,10 @@ export default {
         })
         .then(res => {
           this.steps.splice(this.steps.indexOf(step), 1);
+          console.log(this.steps);
           if (this.steps === undefined) {
             this.steps = [];
+            this.page = {};
           }
           alert("Step " + step.name_elem + " had been deleted!");
         });
@@ -174,6 +188,40 @@ export default {
           //console.log(res.body);
         })
         .catch((this.page = {}));
+    },
+    getType(event) {
+      const jwtHeader = {
+        Authorization: "Bearer " + localStorage.getItem("idToken")
+      };
+      let elem = event.target.value;
+      console.log(elem);
+      if (elem === "Text_input") {
+        this.$http
+          .post(
+            "http://localhost:3001/steps/",
+            {
+              url: this.page.id,
+              elem_type: this.newStep.elem_type,
+              name_elem: this.newStep.name_elem,
+              elem_action: this.newStep.elem_action,
+              task_id: this.id,
+              page_id: this.page.id
+            },
+            { headers: jwtHeader }
+          )
+          .then(res => {
+            console.log("Call steps");
+            console.log(res.body);
+            this.nameElems = res.body;
+          })
+          .catch(err => {
+            console.log(err);
+            alert("Element not found, try again");
+          });
+      } else {
+        this.nameElems = [];
+        this.newStep.name_elem = null;
+      }
     }
   },
   created() {
