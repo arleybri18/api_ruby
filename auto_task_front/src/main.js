@@ -21,10 +21,12 @@ import Tasks from './components/Tasks.vue';
 import EditTask from './components/EditTask.vue';
 import Register from './components/Register.vue';
 
-
 import ExecutionTask from './components/ExecutionTask'
 import Default from './layouts/Default.vue';
 import NoSidebar from './layouts/NoSidebar.vue';
+
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 Vue.component('default-layout', Default);
 Vue.component('no-sidebar-layout', NoSidebar);
