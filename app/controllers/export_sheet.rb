@@ -106,7 +106,6 @@ def newSheet(table, taskName, id=nil)
     puts "use this link: #{link}"
     
     return link
-    sleep(2)
     ##
     # Updating the file with new information
   else
@@ -126,5 +125,8 @@ def newSheet(table, taskName, id=nil)
                                               value_range_object,
                                               value_input_option: 'RAW')
     puts "Updating this: #{file.name}"
+    link = "https://docs.google.com/spreadsheets/d/#{file.id}"
+    puts "use this link: #{link}"
+    return link
   end
 end
