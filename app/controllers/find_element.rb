@@ -3,8 +3,10 @@
 # Function that setup the watir browser
 
 def setup_browser(url)
-  Selenium::WebDriver::Firefox::Service#driver_path = ENV['FIREFOX_PATH']
-  browser = Watir::Browser.new :firefox, headless: true
+  # Selenium::WebDriver::Firefox::Binary.path = ENV['FIREFOX_PATH']
+  options = Selenium::WebDriver::Firefox::Options.new(binary: ENV['FIREFOX_PATH'])
+  browser = Watir::Browser.new Selenium::WebDriver.for :firefox, options: options
+  # browser = Watir::Browser.new :firefox, headless: true
   browser.goto url
   return browser
 end
