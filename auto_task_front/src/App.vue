@@ -34,29 +34,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #D6D6D6;
-  margin-top: 60px;
+  margin-top: 6px;
+  position: relative;
 }
 html, body{
-<<<<<<< HEAD
-      background-image: url("./assets/back4.jpg");
-      background-repeat: no-repeat;
-      background-size: contain;
-      width:100%;
-      height:100%;
-      margin:0px;
-      font-family: 'Work Sans', sans-serif;
-=======
   /* background-color: #D6D6D6; */
-  background-image: url("./assets/bg_table.jpeg");
+  background-image: url("./assets/particles.gif");
   background-repeat: no-repeat;
   background-size: cover;
 	width:100%;
 	height:100%;
 	margin:0px;
 	font-family: 'Work Sans', sans-serif;
+overflow:hidden;
 }
 p {
   color: #4A4343;
->>>>>>> db3a20345ba9e3c170d9d9e70cff5d68cc30eb2f
 }
 </style>
