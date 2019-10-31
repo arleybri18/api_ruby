@@ -46,8 +46,12 @@ class TasksController < ApplicationController
     def set_task
       @task_data = Task.find(params[:id])
       @step = @task_data.steps
+      @executions = @task_data.executions.order('id DESC')
+      puts "este es executions"
+      puts @executions
       @task = {id: @task_data.id, name: @task_data.name, 
               description: @task_data.description, steps: @step,
+              executions: @executions,
               created_at: @task_data.created_at, updated_at: @task_data.updated_at}
     end
 
