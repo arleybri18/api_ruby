@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-#module Find
-#require 'watir'
-#require 'webdrivers'
 ##
 # Function that setup the watir browser
 #
-
 def setup_browser(url)
   browser = Watir::Browser.new :firefox, headless: true
   browser.goto url
@@ -27,7 +23,7 @@ def find_element_table(browser, element_name, execution=false, taskName)
       unless execution == false
         #extract info, send to copy
         table_content = table_head.parent.parent.following_sibling
-        return copy(table_content, taskName)
+        return copy(table_content, "table", taskName)
       end
       return 'ok'
     else
@@ -40,23 +36,30 @@ end
 # function that prepare the selenium object to extract the text
 # first implementation just puts element.text
 #
-def copy(element, taskName)
+def copy(element, type, taskName, id=nil)
 
   load 'export_sheet.rb'
   #puts element.text
   #puts "claaaseee"
-  table = []
-  element.children.each do |child|
-    rows = []
-    child.children.each do |ch|
-      #puts ch.text
-      rows.push(ch.text)
+  if type == 'table'
+    table = []
+    element.children.each do |child|
+      rows = []
+      child.children.each do |ch|
+        #puts ch.text
+        rows.push(ch.text)
+      end
+      table.push(rows)
     end
+    puts "the table"
+    print table
+    return newSheet(table, taskName)
+  else
+    table = []
+    rows = []
+    rows.push(element)
     table.push(rows)
-  end
-  puts "the table"
-  print table
-  return newSheet(table, taskName)
+    return {id: newSheet(table, taskName, id)}
 
 end
 
@@ -136,7 +139,7 @@ end
 ##
 # find an element by is id to copy his content
 # only copy the content when the execution is true
-def find_element_text(browser, element_id, execution=false)
+def find_element_text(browser, element_id, execution=false, taskName, sheetId)
   puts 'execution:'
   puts execution
   if execution == false
@@ -152,7 +155,7 @@ def find_element_text(browser, element_id, execution=false)
   else
     text = browser.element(id: element_id)
     if text.exists?
-      return text
+      return copy(text.text, "text", taskName, sheetId)
     else
       return nil
     end
@@ -163,7 +166,7 @@ end
 # call the function required
 # browser: the browser watir object that manage the web operaitons
 #
-def init_function(browser, type, name_or_id="", text=nil, execution=false, taskName)
+def init_function(browser, type, name_or_id="", text=nil, execution=false, taskName, sheetId)
   puts 'type'
   puts type
   if type == 'Table'
@@ -180,7 +183,7 @@ def init_function(browser, type, name_or_id="", text=nil, execution=false, taskN
     return find_element_text_input(browser, name_or_id, text, execution)
   elsif type == 'Text'
     p 'gototext'
-    return find_element_text(browser, name_or_id, execution)
+    return find_element_text(browser, name_or_id, execution, taskName, sheetId)
   end
   puts type
 end
@@ -200,7 +203,8 @@ def constructor_function(elements, taskName=nil)
   execution = elements.shift
   browser = setup_browser(url)
   puts 'browser_created'
-  result = nil
+  result = []
+  sheetId = nil
   elements.each do |element|
     if element.has_key?(:elem_type)
       type = element[:elem_type]
@@ -220,11 +224,16 @@ def constructor_function(elements, taskName=nil)
       text = element['text']
     end
     puts 'go to init'
-    result = init_function(browser, type, name_or_id, text, execution, taskName)
-    if result == nil
+    result.unshift(init_function(browser, type, name_or_id, text, execution, taskName, sheetId))
+    if result[0] == nil
       puts "Error"
       browser.close
       return nil
+    end
+    result.each do |r|
+      if r.class == Hash
+        sheetId = r[:id]
+      end
     end
     puts ('ok')
   end

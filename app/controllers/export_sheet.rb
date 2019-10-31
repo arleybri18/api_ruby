@@ -44,7 +44,7 @@ puts 'ok'
 # Create a Google Sheet file with the information of the table format :
 # [[data1, data2...], [data3, data4, ....], .... ]
 # Return  
-def newSheet(table, taskName)
+def newSheet(table, taskName, id)
   # open the Google Sheet service
   service = Google::Apis::SheetsV4::SheetsService.new
   service.client_options.application_name = APPLICATION_NAME
@@ -55,41 +55,58 @@ def newSheet(table, taskName)
   drive.client_options.application_name = APPLICATION_NAME
   drive.authorization = authorize
 
-  #create a new sheet
-  spreadsheet = {
-    properties: {
-      title: taskName
+  if id == nil
+    #create a new sheet
+    spreadsheet = {
+      properties: {
+        title: taskName
+      }
     }
-  }
-  spreadsheet = service.create_spreadsheet(spreadsheet,
-                                           fields: 'spreadsheetId')
-
-  puts "Spreadsheet ID: #{spreadsheet.spreadsheet_id}"
-
-  #fill the sheet with the data 'table'
-  data = [
-          {
-            range: 'A:C',
-            majorDimension: "ROWS",
-            values: table,
-          }
-         ]
-  value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:C',
-                                                              majorDimension: "ROWS", values: table)
-  result = service.update_spreadsheet_value(spreadsheet.spreadsheet_id,
-                                          'A:C',
-                                          value_range_object,
-                                          value_input_option: 'RAW')
-  puts = "#{result.updated_cells} cells updated."
-  file = drive.get_file(spreadsheet.spreadsheet_id)
-  puts "Create this file name: #{file.name}"
-  id = spreadsheet.spreadsheet_id
+    spreadsheet = service.create_spreadsheet(spreadsheet,
+                                             fields: 'spreadsheetId')
+    puts "Spreadsheet ID: #{spreadsheet.spreadsheet_id}"
+    #fill the sheet with the data 'table'
+    data = [
+            {
+              range: 'A:C',
+              majorDimension: "ROWS",
+              values: table,
+            }
+           ]
+    value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:C',
+                                                                majorDimension: "ROWS",
+                                                                values: table)
+    result = service.update_spreadsheet_value(spreadsheet.spreadsheet_id,
+                                              'A:C',
+                                              value_range_object,
+                                              value_input_option: 'RAW')
+    puts = "#{result.updated_cells} cells updated."
+    file = drive.get_file(spreadsheet.spreadsheet_id)
+    puts "Create this file name: #{file.name}"
+    id = spreadsheet.spreadsheet_id
+  else
+    file = drive.get_file(id[:id])
+    #geting the info of the sheet
+    get_celds = service.get_spreadsheet_values(id[:id], 'A:C')
+    puts get_celds.range
+=begin
+    value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:C',
+                                                                majorDimension: "ROWS",
+                                                                values: table)
+    result = service.update_spreadsheet_value(spreadsheet.spreadsheet_id,
+                                              'A:C',
+                                              value_range_object,
+                                              value_input_option: 'RAW')
+=end    
+    puts "Updating this: #{file.name}"
 
 ##
 # change the permision of the created file
 # line in google-api-ruby-client/lib/google/apis/core/api_command.rb return {} and make and error.
 # self.body = request_representation.new(request_object).to_json(user_options: { skip_undefined: true })
 #
+
+=begin
   data = 
     {
       "role" => "writer",
@@ -104,3 +121,4 @@ def newSheet(table, taskName)
 
   return link
 end
+=end
