@@ -27,7 +27,7 @@ export default {
     e.preventDefault();
     // generate token for api
     console.log(`${this.user.email} ${this.user.password}`);
-    this.$http.post("http://localhost:3001/user_token/", {
+    this.$http.post(`${process.env.ROOT_API}/user_token/`, {
       auth: {
         email: this.user.email, 
         password: this.user.password
@@ -41,7 +41,7 @@ export default {
         // console.log(localStorage.getItem('idToken'));
       if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
         this.$router.push({ path: "/tasks" });
-        return this.$http.get('http://localhost:3001/tasks/', {headers: jwtHeader})
+        return this.$http.get(`${process.env.ROOT_API}/tasks/`, {headers: jwtHeader})
       };
 
       })

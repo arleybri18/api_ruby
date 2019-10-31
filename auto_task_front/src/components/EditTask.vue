@@ -108,7 +108,7 @@ export default {
       };
       this.$http
         .post(
-          "http://localhost:3001/pages/",
+          `${process.env.ROOT_API}/pages/`,
           { url: page.url },
           { headers: jwtHeader }
         )
@@ -124,7 +124,7 @@ export default {
       };
       this.$http
         .post(
-          "http://localhost:3001/steps/",
+          `${process.env.ROOT_API}/steps/`,
           {
             url: this.page.id,
             elem_type: this.newStep.elem_type,
@@ -151,7 +151,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       this.$http
-        .delete("http://localhost:3001/steps/" + step.id, {
+        .delete(`${process.env.ROOT_API}/steps/` + step.id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -164,7 +164,7 @@ export default {
           alert("Step " + step.name_elem + " had been deleted!");
         });
       this.$http
-        .get("http://localhost:3001/tasks/" + this.task.id, {
+        .get(`${process.env.ROOT_API}/tasks/` + this.task.id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -178,7 +178,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       this.$http
-        .get("http://localhost:3001/pages/" + s[s.length - 1].page_id, {
+        .get(`${process.env.ROOT_API}/pages/` + s[s.length - 1].page_id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -197,7 +197,7 @@ export default {
       if (elem === "Text_input") {
         this.$http
           .post(
-            "http://localhost:3001/steps/",
+            `${process.env.ROOT_API}/steps/`,
             {
               url: this.page.id,
               elem_type: this.newStep.elem_type,
@@ -228,7 +228,7 @@ export default {
       Authorization: "Bearer " + localStorage.getItem("idToken")
     };
     this.$http
-      .get("http://localhost:3001/tasks/" + this.id, { headers: jwtHeader })
+      .get(`${process.env.ROOT_API}/tasks/` + this.id, { headers: jwtHeader })
       .then(res => {
         //console.log(res.body);
         this.task = res.body;

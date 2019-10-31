@@ -37,7 +37,7 @@ export default {
       Authorization: "Bearer " + localStorage.getItem("idToken")
     };
     this.$http
-      .get("http://localhost:3001/tasks/" + this.id, { headers: jwtHeader })
+      .get(`${process.env.ROOT_API}/tasks/` + this.id, { headers: jwtHeader })
       .then(res => {
         //console.log(res.body);
         this.task = res.body;
@@ -46,7 +46,7 @@ export default {
 
     this.$http
       .post(
-        "http://localhost:3001/executions/",
+        `${process.env.ROOT_API}/executions/`,
         { task_id: this.id, state: 0 },
         { headers: jwtHeader }
       )

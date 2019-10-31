@@ -49,7 +49,7 @@ export default {
       console.log("Agregar Task");
       this.$http
         .post(
-          "http://localhost:3001/tasks/",
+          `${process.env.ROOT_API}/tasks/`,
           { name: this.newTask.name, description: this.newTask.description },
           { headers: jwtHeader }
         )
@@ -64,7 +64,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       this.$http
-        .delete("http://localhost:3001/tasks/" + task.id, {
+        .delete(`${process.env.ROOT_API}/tasks/` + task.id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -82,7 +82,7 @@ export default {
     };
     console.log(jwtHeader);
     this.$http
-      .get("http://localhost:3001/tasks", { headers: jwtHeader })
+      .get(`${process.env.ROOT_API}/tasks`, { headers: jwtHeader })
       .then(res => (this.tasks = res.body))
       .catch(error => {
         if (error.status === 401) {
