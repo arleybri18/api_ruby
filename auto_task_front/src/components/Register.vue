@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      this.$http.post(`http://cors.io/?${process.env.ROOT_API}/users`, {
+      this.$http.post(`${process.env.ROOT_API}/users`, {
         fullname: this.user.fullname,
         email: this.user.email,
         password: this.user.password,
