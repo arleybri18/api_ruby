@@ -27,7 +27,7 @@ export default {
     e.preventDefault();
     // generate token for api
     console.log(`${this.user.email} ${this.user.password}`);
-    this.$http.post(`http://cors.io/?${process.env.ROOT_API}/user_token/`, {
+    this.$http.post(`${process.env.ROOT_API}/user_token/`, {
       auth: {
         email: this.user.email, 
         password: this.user.password
@@ -38,10 +38,10 @@ export default {
         const data = JSON.parse(JSON.stringify(jwt.data))
         localStorage.setItem('idToken', data.jwt)
         const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
-        // console.log(localStorage.getItem('idToken'));
+        console.log(localStorage.getItem('idToken'));
       if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
         this.$router.push({ path: "/tasks" });
-        return this.$http.get(`http://cors.io/?${process.env.ROOT_API}/tasks/`, {headers: jwtHeader})
+        return this.$http.get(`${process.env.ROOT_API}/tasks/`, {headers: jwtHeader})
       };
 
       })
