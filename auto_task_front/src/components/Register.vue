@@ -53,7 +53,6 @@ body {
   font-family: "Work Sans", sans-serif;
 }
 body {
-  background-image: url("https://images-assets.nasa.gov/image/6900952/6900952~orig.jpg");
   background-size: cover;
   display: flex;
   flex-direction: column;
