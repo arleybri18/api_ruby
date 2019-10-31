@@ -35,17 +35,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #D6D6D6;
-  margin-top: 60px;
+  margin-top: 6px;
+  position: relative;
 }
 html, body{
   /* background-color: #D6D6D6; */
-  background-image: url("./assets/bg_table.jpeg");
+  background-image: url("./assets/particles.gif");
   background-repeat: no-repeat;
   background-size: cover;
 	width:100%;
 	height:100%;
 	margin:0px;
 	font-family: 'Work Sans', sans-serif;
+overflow:hidden;
 }
 p {
   color: #4a4343;

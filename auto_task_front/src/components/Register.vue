@@ -1,8 +1,8 @@
 <template>
   <div>
     <section>
-      <h2>AuTo Task</h2>
-      <form v-if="!submitted">
+      <h2>A u T o - T a s k</h2>
+      <form v-if="!submitted" id="app" @submit="checkForm">
         <input type="fullname" v-model="user.fullname" placeholder="Fullname" />
         <input type="email" v-model="user.email" placeholder="Email" />
         <input type="password" v-model="user.password" placeholder="Password" />
@@ -10,6 +10,7 @@
         <button v-on:click.prevent="onSubmit">Register</button>
         <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
+
       <div v-if="submitted">
          <h3>Registered</h3>
          <button><router-link v-bind:to="'/'">Log In</router-link></button>
@@ -39,8 +40,9 @@ export default {
         this.submitted = true;
       });
     }
-  }
-};
+  },
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -53,7 +55,6 @@ body {
   font-family: "Work Sans", sans-serif;
 }
 body {
-  background-image: url("https://images-assets.nasa.gov/image/6900952/6900952~orig.jpg");
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -62,44 +63,56 @@ body {
   color: #fff;
 }
 section {
-  background-color: rgba(0, 0, 0, 0.72);
-  width: 25%;
-  min-height: 25%;
+  background-color: rgba(0, 0, 0, 0);
+  width: 50%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
+
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 50px;
 }
+
 h2 {
   font-family: "Archivo Black", sans-serif;
-  color: #e0dada;
+  font-size: 4rem;
+  color: #be5256;
+  padding: 50px 10px;
   margin-left: auto;
   margin-right: auto;
 }
+
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
+
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  padding: 0rem 10rem;
+  margin: 20px 0px;
+
   font-weight: bold;
   background-color: #be5256;
   border: none;
   color: #e0dada;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 5px;
 }
+
 button:hover {
   background-color: #711f1b;
 }
