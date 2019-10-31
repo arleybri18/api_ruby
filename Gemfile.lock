@@ -81,25 +81,44 @@ GEM
     ffi (1.11.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+<<<<<<< HEAD
+    google-api-client (0.30.10)
+      addressable (~> 2.5, >= 2.5.1)
+      googleauth (>= 0.5, < 0.10.0)
+=======
     google-api-client (0.33.2)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 0.9)
+>>>>>>> 3426737ca9226e6b393e0ae5ee73566e8eb976be
       httpclient (>= 2.8.1, < 3.0)
       mini_mime (~> 1.0)
       representable (~> 3.0)
       retriable (>= 2.0, < 4.0)
+<<<<<<< HEAD
+      signet (~> 0.10)
+    google_drive (3.0.3)
+      google-api-client (>= 0.11.0, < 0.31.0)
+      googleauth (>= 0.5.0, < 1.0.0)
+      nokogiri (>= 1.5.3, < 2.0.0)
+    googleauth (0.9.0)
+=======
       signet (~> 0.12)
     google_drive (2.1.3)
       google-api-client (>= 0.11.0, < 1.0.0)
       googleauth (>= 0.5.0, < 1.0.0)
       nokogiri (>= 1.5.3, < 2.0.0)
     googleauth (0.10.0)
+>>>>>>> 3426737ca9226e6b393e0ae5ee73566e8eb976be
       faraday (~> 0.12)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.16)
       multi_json (~> 1.11)
       os (>= 0.9, < 2.0)
+<<<<<<< HEAD
+      signet (~> 0.7)
+=======
       signet (~> 0.12)
+>>>>>>> 3426737ca9226e6b393e0ae5ee73566e8eb976be
     httpclient (2.8.3)
     i18n (1.7.0)
       concurrent-ruby (~> 1.0)
@@ -134,7 +153,10 @@ GEM
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     os (1.0.1)
+<<<<<<< HEAD
+=======
     pg (1.1.4)
+>>>>>>> 3426737ca9226e6b393e0ae5ee73566e8eb976be
     public_suffix (4.0.1)
     puma (3.12.1)
     rack (2.0.7)
