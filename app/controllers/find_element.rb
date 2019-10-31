@@ -18,18 +18,20 @@ def find_element_table(browser, element_name, execution=false, taskName)
     #find element table
     if browser.th(visible_text: element_name).present?
       table_head = browser.th(visible_text: element_name)
+      table_content = table_head.parent.parent.following_sibling
       puts table_head.text
-
-      unless execution == false
-        #extract info, send to copy
-        table_content = table_head.parent.parent.following_sibling
-        return copy(table_content, "table", taskName)
-      end
-      return 'ok'
+    elsif browser.th.children(visible_text: element_name).present?
+      table_head = browser.th.child(visible_text: element_name)
+      table_content = table_head.parent.parent.parent.following_sibling
     else
       puts not_found
       return nil
     end
+    unless execution == false
+      #extract info, send to copy
+       return copy(table_content, taskName)
+    end
+    return 'ok'
 end
 
 ##
@@ -72,7 +74,11 @@ def find_element_button(browser, element_name, execution=false)
   button = nil
   not_found = "element not found"
 
-    if browser.button(visible_text: element_name).present?
+    if browser.element(name: element_name).present?
+      button = browser.element(name: element_name)
+    elsif browser.element(id: element_name).present?
+      button = browser.element(id: element_name)
+    elsif browser.button(visible_text: element_name).present?
       button = browser.button(visible_text: element_name)
       puts button.text
     elsif browser.input(type: "submit", value: element_name).present?
@@ -125,6 +131,7 @@ def find_element_text_input(browser, element_id=nil, text=nil, execution=false)
     return ids
   else
     puts 'no if'
+    puts element_id
     input = browser.text_field(name: element_id)
     if input.exists?
       input.set(text)

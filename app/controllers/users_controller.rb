@@ -15,7 +15,16 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    puts "este es user_params"
+    p user_params
+    # @user = User.new(user_params)
+    @user = User.new(
+      fullname: params[:fullname],
+      email: params[:email],
+      password: params[:password],
+      password_confirmation: params[:password_confirmation],
+      enabled: params[:enabled]
+    )
     p "BEFORE"
     puts @user.to_json
     p "AFTER"
@@ -23,6 +32,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
+      p @user.errors
       render json: @user.errors, status: :unprocessable_entity
     end
   end
@@ -59,6 +69,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:fullname, :email, :password_digest, :enabled)
+      params.require(:user).permit(:fullname, :email, :password, :password_confirmation,  :enabled)
     end
 end

@@ -16,6 +16,7 @@ export default {
   components: {
     Login,
     Tasks,
+    EditTask,
     Register
   },
   computed: {
@@ -47,6 +48,6 @@ html, body{
 	font-family: 'Work Sans', sans-serif;
 }
 p {
-  color: #4A4343;
+  color: #4a4343;
 }
 </style>

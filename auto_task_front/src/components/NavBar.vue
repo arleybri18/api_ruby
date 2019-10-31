@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand"><router-link v-bind:to="'/tasks'">AuToTask</router-link></a>
+    <a class="navbar-brand"><router-link v-bind:to="'/tasks'">AUTO-TASK</router-link></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-item nav-link active">
-          <router-link v-bind:to="'/tasks'">Home</router-link>
+          <router-link v-bind:to="'/tasks'">HOME</router-link>
           <span class="sr-only">(current)</span>
         </a>
         <a class="nav-item nav-link"><router-link v-bind:to="'/'">LOG OUT</router-link></a>
