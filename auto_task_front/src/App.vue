@@ -16,6 +16,7 @@ export default {
   components: {
     Login,
     Tasks,
+    EditTask,
     Register
   },
   computed: {
@@ -49,6 +50,6 @@ html, body{
 overflow:hidden;
 }
 p {
-  color: #4A4343;
+  color: #4a4343;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="add-url">
-      <h1>TASK: {{ task.name }}</h1>
+      <h1 class="font-weight-bold">TASK: {{ task.name }}</h1>
       <form v-on:submit="addPage">
         <input id="url" type="text" v-model="newPage.url" placeholder="URL" />
         <button type="submit">ADD URL</button>
@@ -9,25 +9,30 @@
     </section>
 
     <section class="step-list">
-      <h1>Steps list</h1>
+      <h1 class="font-weight-bold">STEPS</h1>
 
-      <h4>
+      <h4 class="font-weight-bold">
         Current URL:
         <span>{{ page.url }}</span>
       </h4>
 
       <form v-on:submit="addStep">
-        <div class="row d-flex justify-content-center text-center">
+        <div class="row d-flex justify-content-center align-items-center">
           <label for="elementTypeSelect" class="col-sm-2 col-form-label">Element Type</label>
           <div class="col-sm-2">
-            <select class="form-control" v-model="newStep.elem_type" id="elementTypeSelect">
+            <select
+              class="form-control"
+              @change="getType($event)"
+              v-model="newStep.elem_type"
+              id="elementTypeSelect"
+            >
               <option id="text_input">Text_input</option>
               <option id="title">Text</option>
               <option id="button">Button</option>
               <option id="table">Table</option>
             </select>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3" v-if="newStep.elem_type !== 'Text_input'">
             <input
               type="text"
               class="form-control"
@@ -36,18 +41,23 @@
               placeholder="Name element"
             />
           </div>
+          <div class="col-sm-3" v-if="newStep.elem_type === 'Text_input'">
+            <select class="form-control" v-model="newStep.name_elem" id="elementInputSelect">
+              <option v-for="el in nameElems">{{el}}</option>
+            </select>
+          </div>
           <label for="elementActionSelect" class="col-sm-2 col-form-label">
             Element
             Action
           </label>
           <div class="col-sm-2">
             <select class="form-control" v-model="newStep.elem_action" id="elementActionSelect">
-              <option>Click</option>
-              <option>Copy</option>
-              <option>Write</option>
+              <option v-if="newStep.elem_type === 'Button'">Click</option>
+              <option v-if="newStep.elem_type === 'Table' || newStep.elem_type === 'Text'">Copy</option>
+              <option v-if="newStep.elem_type === 'Text_input'">Write</option>
             </select>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3" v-if="newStep.elem_type === 'Text_input'">
             <input
               type="text"
               class="form-control"
@@ -59,8 +69,8 @@
         </div>
         <button type="submit">ADD STEP</button>
       </form>
-      <ul>
-        <li v-for="s in steps">
+      <ul  class="list-group">
+        <li v-for="s in steps"  class="list-group-item bg-transparent">
           <b>Elemen type:</b>
           {{ s.elem_type }}
           <b>Name:</b>
@@ -83,6 +93,7 @@ export default {
       id: this.$route.params.id,
       task: {},
       steps: [],
+      nameElems: [],
       page: {},
       newPage: {},
       newStep: {}
@@ -97,12 +108,13 @@ export default {
       };
       this.$http
         .post(
-          "http://localhost:3001/pages/",
+          `${process.env.ROOT_API}/pages/`,
           { url: page.url },
           { headers: jwtHeader }
         )
         .then(res => (this.page = res.body));
       console.log("Page agregada");
+      this.newPage.url = "";
     },
     addStep(e) {
       e.preventDefault();
@@ -112,7 +124,7 @@ export default {
       };
       this.$http
         .post(
-          "http://localhost:3001/steps/",
+          `${process.env.ROOT_API}/steps/`,
           {
             url: this.page.id,
             elem_type: this.newStep.elem_type,
@@ -124,7 +136,6 @@ export default {
           { headers: jwtHeader }
         )
         .then(res => {
-          console.log("Step created");
           this.steps = res.body;
           this.newStep = {};
           this.getPage(this.steps);
@@ -140,18 +151,20 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       this.$http
-        .delete("http://localhost:3001/steps/" + step.id, {
+        .delete(`${process.env.ROOT_API}/steps/` + step.id, {
           headers: jwtHeader
         })
         .then(res => {
           this.steps.splice(this.steps.indexOf(step), 1);
+          // console.log(this.steps);
           if (this.steps === undefined) {
             this.steps = [];
+            this.page = {};
           }
           alert("Step " + step.name_elem + " had been deleted!");
         });
       this.$http
-        .get("http://localhost:3001/tasks/" + this.task.id, {
+        .get(`${process.env.ROOT_API}/tasks/` + this.task.id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -165,7 +178,7 @@ export default {
         Authorization: "Bearer " + localStorage.getItem("idToken")
       };
       this.$http
-        .get("http://localhost:3001/pages/" + s[s.length - 1].page_id, {
+        .get(`${process.env.ROOT_API}/pages/` + s[s.length - 1].page_id, {
           headers: jwtHeader
         })
         .then(res => {
@@ -174,6 +187,40 @@ export default {
           //console.log(res.body);
         })
         .catch((this.page = {}));
+    },
+    getType(event) {
+      const jwtHeader = {
+        Authorization: "Bearer " + localStorage.getItem("idToken")
+      };
+      let elem = event.target.value;
+      // console.log(elem);
+      if (elem === "Text_input") {
+        this.$http
+          .post(
+            `${process.env.ROOT_API}/steps/`,
+            {
+              url: this.page.id,
+              elem_type: this.newStep.elem_type,
+              name_elem: this.newStep.name_elem,
+              elem_action: this.newStep.elem_action,
+              task_id: this.id,
+              page_id: this.page.id
+            },
+            { headers: jwtHeader }
+          )
+          .then(res => {
+            console.log("Call steps");
+            // console.log(res.body);
+            this.nameElems = res.body;
+          })
+          .catch(err => {
+            console.log(err);
+            alert("Element not found, try again");
+          });
+      } else {
+        this.nameElems = [];
+        this.newStep.name_elem = null;
+      }
     }
   },
   created() {
@@ -181,7 +228,7 @@ export default {
       Authorization: "Bearer " + localStorage.getItem("idToken")
     };
     this.$http
-      .get("http://localhost:3001/tasks/" + this.id, { headers: jwtHeader })
+      .get(`${process.env.ROOT_API}/tasks/` + this.id, { headers: jwtHeader })
       .then(res => {
         //console.log(res.body);
         this.task = res.body;

@@ -26,7 +26,8 @@ export default {
     onSubmit(e) {
     e.preventDefault();
     // generate token for api
-    this.$http.post("http://localhost:3001/user_token/", {
+    console.log(`${this.user.email} ${this.user.password}`);
+    this.$http.post(`${process.env.ROOT_API}/user_token/`, {
       auth: {
         email: this.user.email, 
         password: this.user.password
@@ -37,10 +38,10 @@ export default {
         const data = JSON.parse(JSON.stringify(jwt.data))
         localStorage.setItem('idToken', data.jwt)
         const jwtHeader = {'Authorization': 'Bearer ' + localStorage.getItem('idToken')}
-        // console.log(localStorage.getItem('idToken'));
+        console.log(localStorage.getItem('idToken'));
       if ( typeof localStorage.getItem('idToken') !== 'undefined' || localStorage.getItem('idToken') !== null) {
         this.$router.push({ path: "/tasks" });
-        return this.$http.get('http://localhost:3001/tasks/', {headers: jwtHeader})
+        return this.$http.get(`${process.env.ROOT_API}/tasks/`, {headers: jwtHeader})
       };
 
       })
@@ -129,8 +130,8 @@ button:hover {
 
 a:hover {
   text-decoration: none;
-  background-color: #711f1b;
-  color: #e0dada;
+  background-color: #4A4343;
+  color: #be5256;
 }
 
 @-webkit-keyframes shake {

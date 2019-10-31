@@ -26,14 +26,30 @@ class ExecutionsController < ApplicationController
     steps_list.unshift(true)
     steps_list.unshift(page.url)
     puts steps_list
-    if constructor_function(steps_list) == nil
+    res = constructor_function(steps_list, task.name)
+    puts "this is the res"
+    puts res
+    links = {}
+    res.each do |r|
+      if r.class == Hash
+        if r[:id]
+          links[:id] = r[:id]
+        else
+          links[:table] = r[:table]
+        end
+      end
+    end
+    puts "this is link"
+    puts links
+    if res[0] == nil
       puts 'An unexpected error '
       return nil
     else
       @execution = Execution.new(execution_params)
+      @execution[:result] = links
+      @execution.state = 1;
       if @execution.save
-        @execution.state = 1;
-        render json: @execution, status: :created, location: @execution
+        render json: @execution
       else
         render json: @execution.errors, status: :unprocessable_entity
       end

@@ -5,12 +5,15 @@
       <form v-if="!submitted" id="app" @submit="checkForm">
         <input type="fullname" v-model="user.fullname" placeholder="Fullname" />
         <input type="email" v-model="user.email" placeholder="Email" />
-        <input type="password_digest" v-model="user.password_digest" placeholder="Password" />
+        <input type="password" v-model="user.password" placeholder="Password" />
+        <input type="password" v-model="user.password_conf" placeholder="Password" />
         <button v-on:click.prevent="onSubmit">Register</button>
+        <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
 
       <div v-if="submitted">
          <h3>Registered</h3>
+         <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </div>
     </section>
   </div>
@@ -26,10 +29,11 @@ export default {
   },
   methods: {
     onSubmit(e) {
-      this.$http.post("http://localhost:3001/users", {
+      this.$http.post(`${process.env.ROOT_API}/users`, {
         fullname: this.user.fullname,
         email: this.user.email,
-        password_digest: this.user.password_digest,
+        password: this.user.password,
+        password_confirmation: this.user.password_conf,
         enabled: 1
       }).then(function(data){
         console.log(data);
@@ -94,10 +98,12 @@ input {
   border-radius: 5px;
 }
 
-button {
+button,
+a {
   height: 50px;
   padding: 0rem 10rem;
   margin: 20px 0px;
+
   font-weight: bold;
   background-color: #be5256;
   border: none;
@@ -109,6 +115,12 @@ button {
 
 button:hover {
   background-color: #711f1b;
+}
+
+a:hover {
+  text-decoration: none;
+  background-color: #711f1b;
+  color: #e0dada;
 }
 @-webkit-keyframes shake {
   from,
