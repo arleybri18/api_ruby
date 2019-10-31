@@ -29,7 +29,7 @@ def find_element_table(browser, element_name, execution=false, taskName)
     end
     unless execution == false
       #extract info, send to copy
-       return copy(table_content, taskName)
+       return copy(table_content, taskName, element_name)
     end
     return 'ok'
 end
@@ -38,13 +38,16 @@ end
 # function that prepare the selenium object to extract the text
 # first implementation just puts element.text
 #
-def copy(element, type, taskName, id=nil)
+def copy(element, type, taskName, name_element, id=nil)
 
   load 'export_sheet.rb'
   #puts element.text
   #puts "claaaseee"
   if type == 'table'
+    title = []
+    title.push(name_element)
     table = []
+    table.push(title)
     element.children.each do |child|
       rows = []
       child.children.each do |ch|
@@ -59,10 +62,11 @@ def copy(element, type, taskName, id=nil)
   else
     table = []
     rows = []
+    rows.push(name_element)
     rows.push(element)
     table.push(rows)
     return {id: newSheet(table, taskName, id)}
-
+  end
 end
 
 ##
@@ -148,6 +152,7 @@ end
 # only copy the content when the execution is true
 def find_element_text(browser, element_id, execution=false, taskName, sheetId)
   puts 'execution:'
+  puts sheetId
   puts execution
   if execution == false
     puts element_id
@@ -162,7 +167,7 @@ def find_element_text(browser, element_id, execution=false, taskName, sheetId)
   else
     text = browser.element(id: element_id)
     if text.exists?
-      return copy(text.text, "text", taskName, sheetId)
+      return copy(text.text, "text", taskName, element_id, sheetId)
     else
       return nil
     end

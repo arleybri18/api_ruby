@@ -54,9 +54,12 @@ def newSheet(table, taskName, id)
   drive = Google::Apis::DriveV3::DriveService.new
   drive.client_options.application_name = APPLICATION_NAME
   drive.authorization = authorize
+  puts "id in export sheet"
+  puts id
 
+  #create a new sheet
   if id == nil
-    #create a new sheet
+
     spreadsheet = {
       properties: {
         title: taskName
@@ -84,41 +87,44 @@ def newSheet(table, taskName, id)
     file = drive.get_file(spreadsheet.spreadsheet_id)
     puts "Create this file name: #{file.name}"
     id = spreadsheet.spreadsheet_id
-  else
-    file = drive.get_file(id[:id])
-    #geting the info of the sheet
-    get_celds = service.get_spreadsheet_values(id[:id], 'A:C')
-    puts get_celds.range
-=begin
-    value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: 'A:C',
-                                                                majorDimension: "ROWS",
-                                                                values: table)
-    result = service.update_spreadsheet_value(spreadsheet.spreadsheet_id,
-                                              'A:C',
-                                              value_range_object,
-                                              value_input_option: 'RAW')
-=end    
-    puts "Updating this: #{file.name}"
 
-##
-# change the permision of the created file
-# line in google-api-ruby-client/lib/google/apis/core/api_command.rb return {} and make and error.
-# self.body = request_representation.new(request_object).to_json(user_options: { skip_undefined: true })
-#
-
-=begin
-  data = 
-    {
+    ##
+    # change the permision of the created file
+    # line in google-api-ruby-client/lib/google/apis/core/api_command.rb return {} and make and error.
+    # self.body = request_representation.new(request_object).to_json(user_options: { skip_undefined: true })
+    #
+    data = 
+      {
       "role" => "writer",
       "type" => "anyone"
     }
-#  byebug
-  permision = drive.create_permission(id, data.to_json,
-                                      options: {skip_serialization: true})
-
-  link = "https://docs.google.com/spreadsheets/d/#{file.id}"
-  puts "use this link: #{link}"
-
-  return link
-=end
+    #  byebug
+    permision = drive.create_permission(id, data.to_json,
+                                        options: {skip_serialization: true})
+    
+    link = "https://docs.google.com/spreadsheets/d/#{file.id}"
+    puts "use this link: #{link}"
+    
+    return link
+    sleep(2)
+    ##
+    # Updating the file with new information
+  else
+    id = id.split('/')[5]
+    file = drive.get_file(id)
+    #geting the info of the sheet
+    get_celds = service.get_spreadsheet_values(id, 'A:C')
+    #byebug
+    puts get_celds.values.length
+    n = get_celds.values.length + 1
+    range = "A#{n}:B#{n}"
+    #write!
+    value_range_object = Google::Apis::SheetsV4::ValueRange.new(range: range,
+                                                                values: table)
+    result = service.update_spreadsheet_value(id,
+                                              range,
+                                              value_range_object,
+                                              value_input_option: 'RAW')
+    puts "Updating this: #{file.name}"
+  end
 end
