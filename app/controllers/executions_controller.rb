@@ -28,7 +28,7 @@ class ExecutionsController < ApplicationController
     puts steps_list
     res = constructor_function(steps_list, task.name)
     puts "this is the res"
-    res
+    puts res
     links = {}
     res.each do |r|
       if r.class == Hash
@@ -46,9 +46,10 @@ class ExecutionsController < ApplicationController
       return nil
     else
       @execution = Execution.new(execution_params)
+      @execution[:result] = links
+      @execution.state = 1;
       if @execution.save
-        @execution.state = 1;
-        render json: links
+        render json: @execution
       else
         render json: @execution.errors, status: :unprocessable_entity
       end
