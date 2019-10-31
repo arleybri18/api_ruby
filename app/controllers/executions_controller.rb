@@ -26,7 +26,9 @@ class ExecutionsController < ApplicationController
     steps_list.unshift(true)
     steps_list.unshift(page.url)
     puts steps_list
-    if constructor_function(steps_list, task.name) == nil
+    res = constructor_function(steps_list, task.name)
+    p res
+    if res == nil
       puts 'An unexpected error '
       return nil
     else

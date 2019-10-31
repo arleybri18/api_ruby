@@ -29,7 +29,7 @@ def find_element_table(browser, element_name, execution=false, taskName)
     end
     unless execution == false
       #extract info, send to copy
-       return copy(table_content, taskName, element_name)
+       return copy(table_content, "table", taskName, element_name)
     end
     return 'ok'
 end

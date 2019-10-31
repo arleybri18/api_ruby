@@ -44,7 +44,7 @@ puts 'ok'
 # Create a Google Sheet file with the information of the table format :
 # [[data1, data2...], [data3, data4, ....], .... ]
 # Return  
-def newSheet(table, taskName, id)
+def newSheet(table, taskName, id=nil)
   # open the Google Sheet service
   service = Google::Apis::SheetsV4::SheetsService.new
   service.client_options.application_name = APPLICATION_NAME
