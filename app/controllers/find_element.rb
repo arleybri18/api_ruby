@@ -58,7 +58,7 @@ def copy(element, type, taskName, name_element, id=nil)
     end
     puts "the table"
     print table
-    return newSheet(table, taskName)
+    return {table: newSheet(table, taskName)}
   else
     table = []
     rows = []
