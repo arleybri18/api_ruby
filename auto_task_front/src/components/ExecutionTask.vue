@@ -104,8 +104,7 @@ export default {
 }
 
 .execution-result {
-  background-color: rgba(0, 0, 0, 0);
-  width: 50%;
+  width: 80%;
   border: solid 0.1rem #FF1D00;
   min-height: 100%;
   display: flex;
@@ -117,7 +116,6 @@ export default {
 button,
 a {
   height: 50px;
-  padding: 0rem 10rem;
   margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
@@ -129,16 +127,17 @@ a {
 }
 
 button:hover {
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  border: none;
+  font-size: 1.1rem;
 }
 .image img {
   width: 45%;

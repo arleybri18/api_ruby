@@ -4,7 +4,7 @@
       <h2>Login</h2>
       <form>
         <input type="email" v-model="user.email" placeholder="Email" />
-        <input type="password" v-model="user.password" placeholder="password" />
+        <input type="password" v-model="user.password" placeholder="Password" />
         <button v-on:click="onSubmit">Log in</button>
         <button>
           <router-link v-bind:to="'/Register'">Sign up</router-link>
@@ -61,35 +61,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-html,
-body {
-  /* background-color: #95EEFF; */
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  font-family: "Work Sans", sans-serif;
-}
-
-body {
-
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-
 section {
-  background-color: rgba(0, 0, 0, 0);
   border: solid 0.1rem #ff1D00;
   width: 50%;
-  min-height: 35%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
   padding: 1.5rem;
+  font-size: 1.2rem;
 }
 form {
   display: flex;
@@ -100,7 +80,7 @@ h2 {
   font-family: "Archivo Black", sans-serif;
   font-size:4rem;
   color: #be5256;
-  padding: 50px 10px;
+  padding: 0px 10px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -116,7 +96,6 @@ input {
 button,
 a {
   height: 50px;
-  padding: 0rem 10rem;
   margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
@@ -127,14 +106,11 @@ a {
   border-radius: 5px;
 }
 
-button:hover {
-  background-color: #711f1b;
-}
-
-a:hover {
+button:hover, a:hover {
   text-decoration: none;
-  background-color: #711f1b;
+  background-color: #772828;
   color: #e0dada;
+  font-size: 1.1rem;
 }
 
 @-webkit-keyframes shake {

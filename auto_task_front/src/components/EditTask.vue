@@ -244,7 +244,6 @@ export default {
 
 <style>
 .add-url {
-  background-color: rgba(0, 0, 0, 0);
   width: 50%;
   border: solid 0.1rem #FF1D00;
   min-height: 100%;
@@ -258,6 +257,7 @@ form {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  font-size: 1.2rem;
 }
 input {
   height: 35px;
@@ -266,6 +266,7 @@ input {
   background-color: transparent;
   border: solid 0.1rem #FF1D00;
   border-radius: 5px;
+  font-size: 1.5rem;
 }
 button,
 a {
@@ -281,21 +282,25 @@ a {
 }
 
 button:hover {
-  background-color: #711f1b;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #711f1b;
+  background-color: #772828;
   color: #e0dada;
+  border: none;
+  font-size: 1.1rem;
 }
 
 .step-list {
-  background-color: rgba(0, 0, 0, 0);
   width: 60%;
   border: solid 0.1rem #FF1D00;
   min-height: 100%;
   display: flex;
+  font-size: 1.2rem;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
