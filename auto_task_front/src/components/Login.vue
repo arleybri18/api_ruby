@@ -81,15 +81,15 @@ body {
 }
 
 section {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
-  width: 35%;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 0.1rem #ff1D00;
+  width: 50%;
   min-height: 35%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
 form {
   display: flex;
@@ -97,41 +97,44 @@ form {
   padding: 50px;
 }
 h2 {
-  padding: 10px;
-  font-size:4rem; 
   font-family: "Archivo Black", sans-serif;
-  color: #e0dada;
+  font-size:4rem;
+  color: #be5256;
+  padding: 50px 10px;
   margin-left: auto;
   margin-right: auto;
 }
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
-button, a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+
+button,
+a {
+  height: 50px;
+  padding: 0rem 10rem;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4A4343;
+  color: #e0dada;
   cursor: pointer;
-  font-size: 16px; 
+  font-size: 16px;
+  border-radius: 5px;
 }
+
 button:hover {
-  background-color: #4A4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #711f1b;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4A4343;
-  color: #be5256;
+  background-color: #711f1b;
+  color: #e0dada;
 }
 
 @-webkit-keyframes shake {

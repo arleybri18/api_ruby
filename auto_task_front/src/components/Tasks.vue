@@ -115,52 +115,53 @@ body {
 }
 
 .add-tasks {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
+  background-color: rgba(0, 0, 0, 0);
   width: 50%;
-  min-height: 25%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
+
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 50px;
 }
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
+
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  padding: 0rem 10rem;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4a4343;
+  color: #e0dada;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #711f1b;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #711f1b;
+  color: #e0dada;
 }
 
 .task-list {

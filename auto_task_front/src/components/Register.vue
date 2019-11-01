@@ -103,7 +103,6 @@ a {
   height: 50px;
   padding: 0rem 10rem;
   margin: 20px 0px;
-
   font-weight: bold;
   background-color: #be5256;
   border: none;
