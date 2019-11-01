@@ -1,6 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand"><router-link v-bind:to="'/tasks'">AUTO-TASK</router-link></a>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <img width="70" height="70" src="../assets/icon.jpeg" alt="">
+    <a class="navbar-brand">
+    <router-link v-bind:to="'/tasks'">AUTO-TASK</router-link></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -36,7 +38,6 @@ export default {
 
 <style>
 .navbar {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
-  background-color: #4A4343;
+  background-color: #be5256;
 }
 </style>

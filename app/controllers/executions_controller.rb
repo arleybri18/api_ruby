@@ -1,19 +1,7 @@
 load 'find_element' 
 class ExecutionsController < ApplicationController
-  before_action :set_execution, only: [:show, :update, :destroy]
   before_action :authenticate_user
 
-  # GET /executions
-  def index
-    @executions = Execution.all
-
-    render json: @executions
-  end
-
-  # GET /executions/1
-  def show
-    render json: @execution
-  end
 
   # POST /executions
   def create
@@ -27,8 +15,6 @@ class ExecutionsController < ApplicationController
     steps_list.unshift(page.url)
     puts steps_list
     res = constructor_function(steps_list, task.name)
-    puts "this is the res"
-    puts res
     links = {}
     res.each do |r|
       if r.class == Hash
@@ -39,8 +25,6 @@ class ExecutionsController < ApplicationController
         end
       end
     end
-    puts "this is link"
-    puts links
     if res[0] == nil
       puts 'An unexpected error '
       return nil
@@ -56,25 +40,7 @@ class ExecutionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /executions/1
-  def update
-    if @execution.update(execution_params)
-      render json: @execution
-    else
-      render json: @execution.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /executions/1
-  def destroy
-    @execution.destroy
-  end
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_execution
-      @execution = Execution.find(params[:id])
-    end
 
     # Only allow a trusted parameter "white list" through.
     def execution_params

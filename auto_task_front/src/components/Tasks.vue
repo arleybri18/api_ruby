@@ -13,11 +13,11 @@
     <section class="task-list" v-if="tasks.length">
       <h1 class="font-weight-bold">MY TASKS</h1>
       <ul class="list-group">
-        <li v-for="task in tasks" class="list-group-item bg-transparent">
+        <li v-for="task in tasks" class="list-group-item bg-transparent align-items-start">
           <div class="d-flex justify-content-start">
           {{ task.name }} - {{ task.description }}
           </div>
-          <div class="btn-group" role="group" aria-label="Basic example">
+          <div class="btn-group-sm align-items-start" role="group" aria-label="Basic example">
             <button>
               <router-link v-bind:to="'/tasks/' + task.id">EDIT</router-link>
             </button>
@@ -97,77 +97,64 @@ export default {
 </script>
 
 <style scoped>
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  font-family: "Work Sans", sans-serif;
-}
-
-body {
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
 
 .add-tasks {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
   width: 50%;
-  min-height: 25%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
+
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 50px;
+  font-size: 1.2rem;
 }
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
+  font-size: 1.5rem;
 }
+
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  margin: 15px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4a4343;
+  color: #e0dada;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  border: none;
+  font-size: 1.1rem;
 }
 
 .task-list {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
   border: solid 1px #ff1d00;
-  width: 70%;
+  width: 80%;
   min-height: 25%;
   display: flex;
   flex-direction: column;
@@ -187,6 +174,7 @@ a:hover {
   justify-content: space-around;
   padding: 12px 0;
   box-sizing: border-box;
+  font-size: 1.5rem;
 }
 
 /* Element counter */

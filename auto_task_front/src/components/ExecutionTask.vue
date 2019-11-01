@@ -82,8 +82,8 @@ export default {
           .get(`${process.env.ROOT_API}/tasks/` + this.id, {
             headers: jwtHeader
           })
-          .then(res => {
-            this.task = res.body;
+          .then(rq => {
+            this.task = rq.body;
             this.executions = this.task.executions;
           });
       });
@@ -95,7 +95,7 @@ export default {
 .execution {
   color: #4a4343;
   width: 50%;
-  min-height: 35%;
+  min-height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -104,40 +104,40 @@ export default {
 }
 
 .execution-result {
-  background-color: rgba(29, 24, 24, 0.72);
-  color: aliceblue;
   width: 80%;
-  min-height: 25%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4a4343;
+  color: #e0dada;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #4a4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  border: none;
+  font-size: 1.1rem;
 }
 .image img {
   width: 45%;

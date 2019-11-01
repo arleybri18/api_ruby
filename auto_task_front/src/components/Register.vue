@@ -1,15 +1,16 @@
 <template>
   <div>
     <section>
-      <h2>AuTo Task</h2>
-      <form v-if="!submitted">
+      <h2>A u T o - T a s k</h2>
+      <form v-if="!submitted" id="app" @submit="checkForm">
         <input type="fullname" v-model="user.fullname" placeholder="Fullname" />
         <input type="email" v-model="user.email" placeholder="Email" />
         <input type="password" v-model="user.password" placeholder="Password" />
-        <input type="password" v-model="user.password_conf" placeholder="Password" />
+        <input type="password" v-model="user.password_conf" placeholder="Confirm Password" />
         <button v-on:click.prevent="onSubmit">Register</button>
         <button><router-link v-bind:to="'/'">Log In</router-link></button>
       </form>
+
       <div v-if="submitted">
          <h3>Registered</h3>
          <button><router-link v-bind:to="'/'">Log In</router-link></button>
@@ -39,13 +40,14 @@ export default {
         this.submitted = true;
       });
     }
-  }
-};
+  },
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-html,
+/* html,
 body {
   width: 100%;
   height: 100%;
@@ -59,54 +61,67 @@ body {
   justify-content: center;
   align-items: center;
   color: #fff;
-}
+} */
 section {
-  background-color: rgba(0, 0, 0, 0.72);
-  width: 25%;
-  min-height: 25%;
+  width: 50%;
+  border: solid 0.1rem #FF1D00;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
+  font-size: 1.2rem;
 }
+
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 5px;
 }
+
 h2 {
   font-family: "Archivo Black", sans-serif;
-  color: #e0dada;
+  font-size: 4rem;
+  color: #be5256;
+  padding: 0px 10px;
   margin-left: auto;
   margin-right: auto;
 }
+
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
+
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
   color: #e0dada;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 5px;
 }
+
 button:hover {
-  background-color: #711f1b;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 a:hover {
   text-decoration: none;
-  background-color: #711f1b;
+  background-color: #772828;
   color: #e0dada;
+  border: none;
+  font-size: 1.1rem;
 }
 @-webkit-keyframes shake {
   from,

@@ -4,7 +4,7 @@
       <h2>Login</h2>
       <form>
         <input type="email" v-model="user.email" placeholder="Email" />
-        <input type="password" v-model="user.password" placeholder="password" />
+        <input type="password" v-model="user.password" placeholder="Password" />
         <button v-on:click="onSubmit">Log in</button>
         <button>
           <router-link v-bind:to="'/Register'">Sign up</router-link>
@@ -61,35 +61,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-html,
-body {
-  /* background-color: #95EEFF; */
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  font-family: "Work Sans", sans-serif;
-}
-
-body {
-
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-}
-
 section {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
-  width: 35%;
-  min-height: 35%;
+  border: solid 0.1rem #ff1D00;
+  width: 50%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
+  font-size: 1.2rem;
 }
 form {
   display: flex;
@@ -97,41 +77,40 @@ form {
   padding: 50px;
 }
 h2 {
-  padding: 10px;
-  font-size:4rem; 
   font-family: "Archivo Black", sans-serif;
-  color: #e0dada;
+  font-size:4rem;
+  color: #be5256;
+  padding: 0px 10px;
   margin-left: auto;
   margin-right: auto;
 }
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
-button, a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+
+button,
+a {
+  height: 50px;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4A4343;
+  color: #e0dada;
   cursor: pointer;
-  font-size: 16px; 
-}
-button:hover {
-  background-color: #4A4343;
-  border: solid 1px #be5256;
-  color: #be5256;
+  font-size: 16px;
+  border-radius: 5px;
 }
 
-a:hover {
+button:hover, a:hover {
   text-decoration: none;
-  background-color: #4A4343;
-  color: #be5256;
+  background-color: #772828;
+  color: #e0dada;
+  font-size: 1.1rem;
 }
 
 @-webkit-keyframes shake {
