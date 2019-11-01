@@ -38,7 +38,7 @@ class StepsController < ApplicationController
       list_elements = constructor_function(parameters)
       puts "esto es list elements dentro del if #{list_elements}"
       p list_elements
-      render json: list_elements
+      render json: list_elements[0]
     else
       list_elements = constructor_function(parameters)
       puts "esto es list elements #{list_elements}"
