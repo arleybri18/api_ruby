@@ -1,17 +1,9 @@
 class PagesController < ApplicationController
-  before_action :set_page, only: [:show, :update, :destroy]
+  before_action :set_page, only: [:show]
   before_action :authenticate_user
-
-  # GET /pages
-  def index
-    @pages = Page.all
-
-    render json: @pages
-  end
 
   # GET /pages/1
   def show
-    puts @page
     if @page
       render json: @page
     else
@@ -28,20 +20,6 @@ class PagesController < ApplicationController
     else
       render json: @page.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /pages/1
-  def update
-    if @page.update(page_params)
-      render json: @page
-    else
-      render json: @page.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /pages/1
-  def destroy
-    @page.destroy
   end
 
   private

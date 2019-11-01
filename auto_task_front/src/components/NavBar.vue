@@ -1,6 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand"><router-link v-bind:to="'/tasks'">AUTO-TASK</router-link></a>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand"><img width="40" height="30" src="../assets/icon.jpeg" alt="">
+    <router-link v-bind:to="'/tasks'">AUTO-TASK</router-link></a>
     <button
       class="navbar-toggler"
       type="button"

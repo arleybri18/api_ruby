@@ -82,8 +82,8 @@ export default {
           .get(`${process.env.ROOT_API}/tasks/` + this.id, {
             headers: jwtHeader
           })
-          .then(res => {
-            this.task = res.body;
+          .then(rq => {
+            this.task = rq.body;
             this.executions = this.task.executions;
           });
       });
