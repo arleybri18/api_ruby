@@ -244,27 +244,28 @@ export default {
 
 <style>
 .add-url {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  border: solid 1px #ff1d00;
+  background-color: rgba(0, 0, 0, 0);
   width: 50%;
-  min-height: 25%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
 form {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 20px;
 }
 input {
   height: 35px;
-  padding: 5px 5px;
-  margin: 10px 0px;
-  background-color: #e0dada;
-  border: none;
+  padding: 1.6rem 5px;
+  margin: 20px 0px;
+  background-color: transparent;
+  border: solid 0.1rem #FF1D00;
+  border-radius: 5px;
 }
 button,
 a {
@@ -290,15 +291,16 @@ a:hover {
 }
 
 .step-list {
-  background-color: rgba(24, 25, 29, 0.72);
-  color: aliceblue;
-  width: 70%;
-  min-height: 25%;
+  background-color: rgba(0, 0, 0, 0);
+  width: 60%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
+  padding: 1.5rem;
 }
 
 .step-list ul {
@@ -312,6 +314,10 @@ a:hover {
   justify-content: space-around;
   padding: 12px 0;
   box-sizing: border-box;
+}
+
+.col-form-label {
+  color: #be5256;
 }
 
 /* Element counter */

@@ -95,7 +95,7 @@ export default {
 .execution {
   color: #4a4343;
   width: 50%;
-  min-height: 35%;
+  min-height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -104,27 +104,28 @@ export default {
 }
 
 .execution-result {
-  background-color: rgba(29, 24, 24, 0.72);
-  color: aliceblue;
-  width: 80%;
-  min-height: 25%;
+  background-color: rgba(0, 0, 0, 0);
+  width: 50%;
+  border: solid 0.1rem #FF1D00;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
   margin-left: auto;
   margin-right: auto;
+  padding: 1.5rem;
 }
 button,
 a {
-  height: 40px;
-  padding: 5px 5px;
-  margin: 10px 0px;
+  height: 50px;
+  padding: 0rem 10rem;
+  margin: 20px 0px;
   font-weight: bold;
   background-color: #be5256;
   border: none;
-  color: #4a4343;
+  color: #e0dada;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 5px;
 }
 
 button:hover {
