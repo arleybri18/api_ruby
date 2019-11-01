@@ -125,7 +125,18 @@ input {
   font-size: 1.5rem;
 }
 
-button,
+button {
+  height: 50px;
+  margin: 15px 0px;
+  font-weight: bold;
+  background-color: #be5256;
+  border: none;
+  color: #e0dada;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
 a {
   height: 50px;
   margin: 15px 0px;
@@ -136,6 +147,7 @@ a {
   cursor: pointer;
   font-size: 1rem;
   border-radius: 5px;
+  text-decoration: none;
 }
 
 button:hover {
