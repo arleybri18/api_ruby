@@ -62,4 +62,4 @@ gem 'google-api-client', '~> 0.11'
 
 
 #json
-gem 'json', '~> 1.8', '>= 1.8.3'
+gem 'json', '~> 2.3'
